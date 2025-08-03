@@ -15,36 +15,74 @@ type Project = {
 
 const projects: Project[] = [
   {
-    id: "serene-analytics",
-    title: "Serene Analytics",
+    id: "archipelago",
+    title: "Archipelago - Stock Market Analysis",
+    year: "2025",
+    blurb:
+      "Full-stack biotech market analysis dashboard built with Next.js and FastAPI, featuring real-time price tracking, interactive visualizations, and comprehensive financial metrics.",
+    image: "/projects/archipelago.jpg",
+    alt: "Stock market analysis dashboard",
+    links: [],
+  },
+  {
+    id: "customer-reference",
+    title: "Customer Reference Agent",
+    year: "2025",
+    blurb:
+      "AI-powered Customer Reference Agent using Anthropic's Claude for Act-On's sales team, instantly surfacing relevant customer quotes and testimonials, streamlining personalized sales pitches.",
+    image: "/projects/customer-reference.jpg",
+    alt: "AI-powered reference agent interface",
+    links: [],
+  },
+  {
+    id: "blog-analysis",
+    title: "Blog Analysis",
+    year: "2025",
+    blurb:
+      "Python-based content audit system using Anthropic's Claude API for Act-On's marketing team, analyzing 2000+ blog posts for brand alignment and SEO, saving content team months of planned work.",
+    image: "/projects/blog-analysis.jpg",
+    alt: "Blog content analysis dashboard",
+    links: [],
+  },
+  {
+    id: "listen-too",
+    title: "Listen Too",
+    year: "2023",
+    blurb:
+      "Next.js web application using TypeScript and Tailwind that generates shareable Spotify playlists from users' top tracks, featuring OAuth integration and a responsive interface.",
+    image: "/projects/listen-too.jpg",
+    alt: "Spotify playlist generator",
+    links: [],
+  },
+  {
+    id: "brand-coach",
+    title: "Brand Coach",
     year: "2024",
     blurb:
-      "A calm analytics suite with real‑time streams and frictionless navigation.",
-    image: "/projects/project-1.png",
-    alt: "Analytics dashboard with clean cards and charts",
-    links: [
-      { label: "Case study", href: "#" },
-      { label: "Live demo", href: "#" },
-    ],
+      "AI-powered content evaluation tool that helps marketing teams align their writing with brand guidelines. Built with Next.js, TypeScript, and the Claude API for real-time analysis.",
+    image: "/projects/brand-coach.jpg",
+    alt: "Brand content evaluation tool",
+    links: [],
   },
   {
-    id: "minimal-publishing",
-    title: "Minimal Publishing",
-    year: "2023",
+    id: "patches",
+    title: "pATCHES",
+    year: "ongoing",
     blurb:
-      "Zero‑noise authoring with MDX, role‑based access, and server actions.",
-    image: "/projects/project-b.jpg",
-    alt: "Minimal publishing UI",
-    links: [{ label: "Repo", href: "#" }],
+      "Educational music platform and JavaScript plugin ecosystem serving 2M+ users, featuring optimized AWS infrastructure and generating over $200k software sales.",
+    image: "/projects/patches.jpg",
+    alt: "pATCHES music education platform",
+    links: [],
   },
   {
-    id: "ops-toolkit",
-    title: "Operational Toolkit",
-    year: "2023",
-    blurb: "Operational controls with instant search and granular permissions.",
-    image: "/projects/project-c.jpg",
-    alt: "Operational tooling interface",
-    links: [{ label: "Case study", href: "#" }],
+    id: "url-reader",
+    title: "URL Reader",
+    year: "2024",
+    blurb:
+      "Get an audio version of a web page in a podcast feed. Utilizing OpenAI's Text-to-Speech API, featuring automated article scraping, AWS hosting, and custom RSS feed generation.",
+    image: "/projects/url-reader.jpg",
+    alt: "URL to audio conversion tool",
+    links: [],
   },
 ];
 
@@ -107,9 +145,7 @@ export default function Page() {
           {/* Header inside column */}
           <header className="mb-8">
             <div className="flex items-baseline justify-between">
-              <a href="/" className="font-medium tracking-tight">
-                Your Name
-              </a>
+              <span className="font-medium tracking-tight">Daniel Hilse</span>
               <nav className="text-sm text-neutral-600">
                 <a href="#services" className="hover:text-neutral-900">
                   Services
@@ -132,13 +168,20 @@ export default function Page() {
               Calm, modern web apps.
             </h1>
             <p className="mt-4 text-neutral-600">
-              I’m Your Name, a full‑stack developer focused on clear interfaces
-              and reliable systems. Below are selected projects—hover or click
-              to preview on the left.
+              I'm a full‑stack design engineer focused on clear interfaces and
+              reliable systems. I'm a 2x founder and full-stack developer with 9
+              years of experience delivering impactful solutions for startups
+              and enterprise clients using Python and React.
+            </p>
+            <p className="mt-3 text-sm text-neutral-500">
+              Denver, CO · MDT (GMT -6) · Available from July 2025
             </p>
           </div>
 
           {/* Plain text project list */}
+          <p className="mt-3 text-xs text-neutral-500">
+            Hover to preview · Click to select
+          </p>
           <ul className="text-neutral-800">
             {projects.map((p) => {
               const isActive = (hovered ?? active) === p.id;
@@ -165,30 +208,60 @@ export default function Page() {
               );
             })}
           </ul>
-          <p className="mt-3 text-xs text-neutral-500">
-            Hover to preview · Click to select
-          </p>
         </div>
       </section>
 
       {/* Services / About / CTA */}
       <section id="services" className="mt-24 sm:mt-28">
-        <div className="max-w-3xl">
-          <h3 className="text-xl font-medium tracking-tight">Services</h3>
-          <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+        <div className="max-w-5xl">
+          <h3 className="text-xl font-medium tracking-tight">
+            Services and Capabilities
+          </h3>
+          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <li className="rounded-xl border border-neutral-200 p-5">
-              <h4 className="font-medium">Product Engineering</h4>
+              <h4 className="font-medium">Creative Development</h4>
               <p className="mt-2 text-sm text-neutral-600">
-                End‑to‑end development of modern web apps with clear UX and
-                durable systems.
+                Combining thoughtful design with robust implementation in
+                Next.js, React, and TypeScript to create engaging user
+                experiences that solve real problems.
               </p>
+              <p className="mt-3 text-xs text-neutral-500">$5,000+ · 2-4w</p>
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
-              <h4 className="font-medium">Architecture & DX</h4>
+              <h4 className="font-medium">AI Integration & Automation</h4>
               <p className="mt-2 text-sm text-neutral-600">
-                Type‑safe APIs, performance, testing, CI/CD, and maintainable
-                foundations.
+                Custom AI solutions using OpenAI and Anthropic APIs for
+                intelligent automation and analysis. Specialized in prompt
+                engineering and Python-based data processing.
               </p>
+              <p className="mt-3 text-xs text-neutral-500">$3,000+ · 1-3w</p>
+            </li>
+            <li className="rounded-xl border border-neutral-200 p-5">
+              <h4 className="font-medium">Web Development</h4>
+              <p className="mt-2 text-sm text-neutral-600">
+                Transforming underperforming websites into engaging digital
+                experiences through strategic design, compelling copy, and
+                smooth animations that drive conversions.
+              </p>
+              <p className="mt-3 text-xs text-neutral-500">$5,000+ · 3-5w</p>
+            </li>
+            <li className="rounded-xl border border-neutral-200 p-5">
+              <h4 className="font-medium">Technical SEO & Content</h4>
+              <p className="mt-2 text-sm text-neutral-600">
+                Data-driven SEO strategy using SEMrush to identify
+                opportunities, combined with Python automation for content
+                auditing and performance optimization.
+              </p>
+              <p className="mt-3 text-xs text-neutral-500">$2,000+ · 1-2w</p>
+            </li>
+            <li className="rounded-xl border border-neutral-200 p-5">
+              <h4 className="font-medium">Design Systems & UI</h4>
+              <p className="mt-2 text-sm text-neutral-600">
+                Building comprehensive design systems and component libraries in
+                Figma, translated into production-ready frontend code for
+                scalable products.
+              </p>
+              <p className="mt-3 text-xs text-neutral-500">$2,500+ · 1-3w</p>
             </li>
           </ul>
         </div>
@@ -196,11 +269,55 @@ export default function Page() {
         <div id="about" className="mt-16 max-w-3xl">
           <h3 className="text-xl font-medium tracking-tight">About</h3>
           <p className="mt-4 text-neutral-600">
-            I design and build product‑ready web apps with intention—minimal
-            interfaces paired with reliable infrastructure. Recent focus: React
-            Server Components, edge rendering, and type‑safe full‑stack
-            workflows.
+            I'm a 2x founder and full-stack developer with 9 years of experience
+            delivering impactful solutions for startups and enterprise clients.
+            I specialize in creative development, AI integration, and intuitive
+            user experiences backed by scalable architecture. Based in Denver,
+            CO.
           </p>
+          <div className="mt-6">
+            <h4 className="text-sm font-medium text-neutral-900 mb-3">
+              Experience
+            </h4>
+            <ul className="space-y-2 text-sm text-neutral-600">
+              <li className="flex justify-between">
+                <span>
+                  <strong>Archipelago</strong> · Full Stack Developer
+                </span>
+                <span className="text-neutral-500">2024 → Now</span>
+              </li>
+              <li className="flex justify-between">
+                <span>
+                  <strong>Act-On</strong> · Freelance Developer
+                </span>
+                <span className="text-neutral-500">2024 → 2025</span>
+              </li>
+              <li className="flex justify-between">
+                <span>
+                  <strong>pATCHES</strong> · Founder / Developer
+                </span>
+                <span className="text-neutral-500">2016 → Now</span>
+              </li>
+              <li className="flex justify-between">
+                <span>
+                  <strong>Veteran&apos;s United</strong> · SEO / Python
+                </span>
+                <span className="text-neutral-500">2022</span>
+              </li>
+              <li className="flex justify-between">
+                <span>
+                  <strong>Marpipe</strong> · Head of Product
+                </span>
+                <span className="text-neutral-500">2019 → 2020</span>
+              </li>
+              <li className="flex justify-between">
+                <span>
+                  <strong>Ableton, AG</strong> · Learning Resources
+                </span>
+                <span className="text-neutral-500">2018</span>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div id="contact" className="mt-16 max-w-2xl">
@@ -213,7 +330,7 @@ export default function Page() {
             </p>
             <div className="mt-5">
               <a
-                href="mailto:you@domain.com?subject=Hello"
+                href="mailto:dan@danhilse.com?subject=Hello"
                 className="inline-flex items-center rounded-full bg-neutral-900 text-white px-5 py-2.5 text-sm hover:bg-neutral-800 transition"
               >
                 Email me
