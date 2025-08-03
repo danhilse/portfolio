@@ -20,9 +20,12 @@ const projects: Project[] = [
     year: "2025",
     blurb:
       "Full-stack biotech market analysis dashboard built with Next.js and FastAPI, featuring real-time price tracking, interactive visualizations, and comprehensive financial metrics.",
-    image: "/projects/archipelago.jpg",
+    image: "/projects/project-1.png",
     alt: "Stock market analysis dashboard",
-    links: [],
+    links: [
+      { label: "Live Demo", href: "https://archipelago.example.com" },
+      { label: "GitHub", href: "https://github.com/yourusername/archipelago" },
+    ],
   },
   {
     id: "customer-reference",
@@ -30,9 +33,11 @@ const projects: Project[] = [
     year: "2025",
     blurb:
       "AI-powered Customer Reference Agent using Anthropic's Claude for Act-On's sales team, instantly surfacing relevant customer quotes and testimonials, streamlining personalized sales pitches.",
-    image: "/projects/customer-reference.jpg",
+    image: "/projects/project-2.png",
     alt: "AI-powered reference agent interface",
-    links: [],
+    links: [
+      { label: "Case Study", href: "https://acton.com/customer-reference" },
+    ],
   },
   {
     id: "blog-analysis",
@@ -40,9 +45,9 @@ const projects: Project[] = [
     year: "2025",
     blurb:
       "Python-based content audit system using Anthropic's Claude API for Act-On's marketing team, analyzing 2000+ blog posts for brand alignment and SEO, saving content team months of planned work.",
-    image: "/projects/blog-analysis.jpg",
+    image: "/projects/project-3.png",
     alt: "Blog content analysis dashboard",
-    links: [],
+    links: [{ label: "Case Study", href: "https://acton.com/blog-analysis" }],
   },
   {
     id: "listen-too",
@@ -50,9 +55,12 @@ const projects: Project[] = [
     year: "2023",
     blurb:
       "Next.js web application using TypeScript and Tailwind that generates shareable Spotify playlists from users' top tracks, featuring OAuth integration and a responsive interface.",
-    image: "/projects/listen-too.jpg",
+    image: "/projects/project-4.png",
     alt: "Spotify playlist generator",
-    links: [],
+    links: [
+      { label: "Live Demo", href: "https://listentoo.app" },
+      { label: "GitHub", href: "https://github.com/yourusername/listen-too" },
+    ],
   },
   {
     id: "brand-coach",
@@ -60,9 +68,11 @@ const projects: Project[] = [
     year: "2024",
     blurb:
       "AI-powered content evaluation tool that helps marketing teams align their writing with brand guidelines. Built with Next.js, TypeScript, and the Claude API for real-time analysis.",
-    image: "/projects/brand-coach.jpg",
+    image: "/projects/project-5.png",
     alt: "Brand content evaluation tool",
-    links: [],
+    links: [
+      { label: "GitHub", href: "https://github.com/yourusername/brand-coach" },
+    ],
   },
   {
     id: "patches",
@@ -70,9 +80,9 @@ const projects: Project[] = [
     year: "ongoing",
     blurb:
       "Educational music platform and JavaScript plugin ecosystem serving 2M+ users, featuring optimized AWS infrastructure and generating over $200k software sales.",
-    image: "/projects/patches.jpg",
+    image: "/projects/project-6.png",
     alt: "pATCHES music education platform",
-    links: [],
+    links: [{ label: "Website", href: "https://patches.com" }],
   },
   {
     id: "url-reader",
@@ -80,9 +90,11 @@ const projects: Project[] = [
     year: "2024",
     blurb:
       "Get an audio version of a web page in a podcast feed. Utilizing OpenAI's Text-to-Speech API, featuring automated article scraping, AWS hosting, and custom RSS feed generation.",
-    image: "/projects/url-reader.jpg",
+    image: "/projects/project-7.png",
     alt: "URL to audio conversion tool",
-    links: [],
+    links: [
+      { label: "GitHub", href: "https://github.com/yourusername/url-reader" },
+    ],
   },
 ];
 
@@ -104,7 +116,7 @@ export default function Page() {
             <figure className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
               <div
                 className="relative w-full"
-                style={{ height: "calc(100vh - 11rem)" }}
+                style={{ height: "calc(100vh - 14rem)" }}
               >
                 <Image
                   key={activeProject.image}
@@ -168,13 +180,11 @@ export default function Page() {
               Calm, modern web apps.
             </h1>
             <p className="mt-4 text-neutral-600">
-              I'm a full‑stack design engineer focused on clear interfaces and
-              reliable systems. I'm a 2x founder and full-stack developer with 9
-              years of experience delivering impactful solutions for startups
-              and enterprise clients using Python and React.
-            </p>
-            <p className="mt-3 text-sm text-neutral-500">
-              Denver, CO · MDT (GMT -6) · Available from July 2025
+              I&apos;m a full‑stack design engineer focused on clear interfaces
+              and reliable systems. I&apos;m a 2x founder and full-stack
+              developer with 9 years of experience delivering impactful
+              solutions for startups and enterprise clients using Python and
+              React.
             </p>
           </div>
 
@@ -201,9 +211,24 @@ export default function Page() {
                       {p.year ?? ""}
                     </span>
                   </div>
-                  <p className="mt-1 text-sm text-neutral-600 line-clamp-2">
-                    {p.blurb}
-                  </p>
+                  {p.links && p.links.length > 0 && (
+                    <div
+                      className="mt-1 flex gap-3"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {p.links.map((link) => (
+                        <a
+                          key={link.href}
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-neutral-500 hover:text-neutral-900 transition-colors"
+                        >
+                          {link.label} ↗
+                        </a>
+                      ))}
+                    </div>
+                  )}
                 </li>
               );
             })}
@@ -269,11 +294,11 @@ export default function Page() {
         <div id="about" className="mt-16 max-w-3xl">
           <h3 className="text-xl font-medium tracking-tight">About</h3>
           <p className="mt-4 text-neutral-600">
-            I'm a 2x founder and full-stack developer with 9 years of experience
-            delivering impactful solutions for startups and enterprise clients.
-            I specialize in creative development, AI integration, and intuitive
-            user experiences backed by scalable architecture. Based in Denver,
-            CO.
+            I&apos;m a 2x founder and full-stack developer with 9 years of
+            experience delivering impactful solutions for startups and
+            enterprise clients. I specialize in creative development, AI
+            integration, and intuitive user experiences backed by scalable
+            architecture. Based in Denver, CO.
           </p>
           <div className="mt-6">
             <h4 className="text-sm font-medium text-neutral-900 mb-3">
