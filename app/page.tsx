@@ -100,12 +100,10 @@ const projects: Project[] = [
 
 export default function Page() {
   const [active, setActive] = useState(projects[0].id);
-  const [hovered, setHovered] = useState<string | null>(null);
 
   const activeProject = useMemo(() => {
-    const id = hovered ?? active;
-    return projects.find((p) => p.id === id) ?? projects[0];
-  }, [active, hovered]);
+    return projects.find((p) => p.id === active) ?? projects[0];
+  }, [active]);
 
   return (
     <div className="py-6 sm:py-8">
@@ -116,7 +114,7 @@ export default function Page() {
             <figure className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
               <div
                 className="relative w-full"
-                style={{ height: "calc(100vh - 14rem)" }}
+                style={{ height: "calc(100vh - 7rem)" }}
               >
                 <Image
                   key={activeProject.image}
@@ -130,12 +128,14 @@ export default function Page() {
               </div>
             </figure>
             <figcaption className="mt-4">
-              <h2 className="text-xl font-medium tracking-tight">
+              {/* <h2 className="text-xl font-medium tracking-tight">
                 {activeProject.title}
                 {activeProject.year ? ` · ${activeProject.year}` : ""}
-              </h2>
-              <p className="mt-2 text-neutral-600">{activeProject.blurb}</p>
-              {activeProject.links && activeProject.links.length > 0 && (
+              </h2> */}
+              <p className="mt-2 text-sm text-neutral-600 leading-snug">
+                {activeProject.blurb}
+              </p>
+              {/* {activeProject.links && activeProject.links.length > 0 && (
                 <div className="mt-4 flex gap-4">
                   {activeProject.links.map((l) => (
                     <a
@@ -147,7 +147,7 @@ export default function Page() {
                     </a>
                   ))}
                 </div>
-              )}
+              )} */}
             </figcaption>
           </div>
         </div>
@@ -157,7 +157,7 @@ export default function Page() {
           {/* Header inside column */}
           <header className="mb-8">
             <div className="flex items-baseline justify-between">
-              <span className="font-medium tracking-tight">Daniel Hilse</span>
+              <span className="font-semibold tracking-tight">Daniel Hilse</span>
               <nav className="text-sm text-neutral-600">
                 <a href="#services" className="hover:text-neutral-900">
                   Services
@@ -176,33 +176,33 @@ export default function Page() {
 
           {/* Intro/About brief */}
           <div className="mb-10">
-            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight leading-tight">
+            {/* <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight leading-tight">
               Calm, modern web apps.
-            </h1>
-            <p className="mt-4 text-neutral-600">
-              I&apos;m a full‑stack design engineer focused on clear interfaces
-              and reliable systems. I&apos;m a 2x founder and full-stack
-              developer with 9 years of experience delivering impactful
-              solutions for startups and enterprise clients using Python and
-              React.
+            </h1> */}
+            <p className="mt-4 text-neutral-600 leading-relaxed">
+              I&apos;m a full‑stack design engineer focused on{" "}
+              <strong>calm, modern interfaces</strong> and reliable systems.
+              I&apos;m a 2x founder and full-stack developer with 9 years of
+              experience delivering impactful solutions for startups and
+              enterprise clients using Python and React.
             </p>
           </div>
 
           {/* Plain text project list */}
           <p className="mt-3 text-xs text-neutral-500">
-            Hover to preview · Click to select
+            Hover a project to view
           </p>
           <ul className="text-neutral-800">
             {projects.map((p) => {
-              const isActive = (hovered ?? active) === p.id;
+              const isActive = active === p.id;
               return (
                 <li
                   key={p.id}
-                  onMouseEnter={() => setHovered(p.id)}
-                  onMouseLeave={() => setHovered(null)}
-                  onClick={() => setActive(p.id)}
+                  onMouseEnter={() => setActive(p.id)}
                   className={`cursor-pointer py-3 border-b border-neutral-200/70 last:border-b-0 transition-colors ${
-                    isActive ? "text-neutral-900" : "hover:text-neutral-900"
+                    isActive
+                      ? "text-neutral-900 font-semibold"
+                      : "text-neutral-800 opacity-60 hover:opacity-100 hover:text-neutral-900"
                   }`}
                 >
                   <div className="flex items-baseline justify-between gap-4">
@@ -245,7 +245,7 @@ export default function Page() {
           <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <li className="rounded-xl border border-neutral-200 p-5">
               <h4 className="font-medium">Creative Development</h4>
-              <p className="mt-2 text-sm text-neutral-600">
+              <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
                 Combining thoughtful design with robust implementation in
                 Next.js, React, and TypeScript to create engaging user
                 experiences that solve real problems.
@@ -254,7 +254,7 @@ export default function Page() {
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
               <h4 className="font-medium">AI Integration & Automation</h4>
-              <p className="mt-2 text-sm text-neutral-600">
+              <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
                 Custom AI solutions using OpenAI and Anthropic APIs for
                 intelligent automation and analysis. Specialized in prompt
                 engineering and Python-based data processing.
@@ -263,7 +263,7 @@ export default function Page() {
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
               <h4 className="font-medium">Web Development</h4>
-              <p className="mt-2 text-sm text-neutral-600">
+              <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
                 Transforming underperforming websites into engaging digital
                 experiences through strategic design, compelling copy, and
                 smooth animations that drive conversions.
@@ -272,7 +272,7 @@ export default function Page() {
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
               <h4 className="font-medium">Technical SEO & Content</h4>
-              <p className="mt-2 text-sm text-neutral-600">
+              <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
                 Data-driven SEO strategy using SEMrush to identify
                 opportunities, combined with Python automation for content
                 auditing and performance optimization.
@@ -281,7 +281,7 @@ export default function Page() {
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
               <h4 className="font-medium">Design Systems & UI</h4>
-              <p className="mt-2 text-sm text-neutral-600">
+              <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
                 Building comprehensive design systems and component libraries in
                 Figma, translated into production-ready frontend code for
                 scalable products.
@@ -293,7 +293,7 @@ export default function Page() {
 
         <div id="about" className="mt-16 max-w-3xl">
           <h3 className="text-xl font-medium tracking-tight">About</h3>
-          <p className="mt-4 text-neutral-600">
+          <p className="mt-4 text-neutral-600 leading-relaxed">
             I&apos;m a 2x founder and full-stack developer with 9 years of
             experience delivering impactful solutions for startups and
             enterprise clients. I specialize in creative development, AI
@@ -304,7 +304,7 @@ export default function Page() {
             <h4 className="text-sm font-medium text-neutral-900 mb-3">
               Experience
             </h4>
-            <ul className="space-y-2 text-sm text-neutral-600">
+            <ul className="space-y-3 text-sm text-neutral-600">
               <li className="flex justify-between">
                 <span>
                   <strong>Archipelago</strong> · Full Stack Developer
@@ -350,7 +350,7 @@ export default function Page() {
             <h3 className="text-lg font-medium tracking-tight">
               Let’s build something calm.
             </h3>
-            <p className="mt-2 text-neutral-600">
+            <p className="mt-2 text-neutral-600 leading-relaxed">
               Available for select collaborations, contracts, and advising.
             </p>
             <div className="mt-5">
