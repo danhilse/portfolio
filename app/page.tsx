@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useMemo, useState } from "react";
 
+import GhostlikeText from "@/components/GhostlikeText";
+
 type Project = {
   id: string;
   title: string;
@@ -159,17 +161,26 @@ export default function Page() {
             <div className="flex items-baseline justify-between">
               <span className="font-semibold tracking-tight">Daniel Hilse</span>
               <nav className="text-sm text-neutral-600">
-                <a href="#services" className="hover:text-neutral-900">
-                  Services
-                </a>
+                <GhostlikeText
+                  variant="no-opacity"
+                  className="hover:text-neutral-900"
+                >
+                  <a href="#services">Services</a>
+                </GhostlikeText>
                 <span className="mx-3 text-neutral-300">/</span>
-                <a href="#about" className="hover:text-neutral-900">
-                  About
-                </a>
+                <GhostlikeText
+                  variant="no-opacity"
+                  className="hover:text-neutral-900"
+                >
+                  <a href="#about">About</a>
+                </GhostlikeText>
                 <span className="mx-3 text-neutral-300">/</span>
-                <a href="#contact" className="hover:text-neutral-900">
-                  Contact
-                </a>
+                <GhostlikeText
+                  variant="no-opacity"
+                  className="hover:text-neutral-900"
+                >
+                  <a href="#contact">Contact</a>
+                </GhostlikeText>
               </nav>
             </div>
           </header>
@@ -180,11 +191,26 @@ export default function Page() {
               Calm, modern web apps.
             </h1> */}
             <p className="mt-4 text-neutral-600 leading-relaxed">
-              I&apos;m a full‑stack design engineer focused on{" "}
-              <strong>calm, modern interfaces</strong> and reliable systems.
+              I&apos;m a full‑stack design engineer based in Boulder, CO focused
+              on building{" "}
+              <GhostlikeText variant="auto" delay={400}>
+                <strong>calm, modern interfaces</strong>
+              </GhostlikeText>{" "}
+              and{" "}
+              <GhostlikeText variant="auto" delay={1000}>
+                reliable systems.
+              </GhostlikeText>{" "}
               I&apos;m a 2x founder and full-stack developer with 9 years of
               experience delivering impactful solutions for startups and
-              enterprise clients using Python and React.
+              enterprise clients using{" "}
+              <GhostlikeText variant="auto" delay={2000}>
+                Python
+              </GhostlikeText>{" "}
+              and{" "}
+              <GhostlikeText variant="auto" delay={2400}>
+                React
+              </GhostlikeText>
+              .
             </p>
           </div>
 
@@ -217,15 +243,19 @@ export default function Page() {
                       onClick={(e) => e.stopPropagation()}
                     >
                       {p.links.map((link) => (
-                        <a
+                        <GhostlikeText
                           key={link.href}
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          variant="no-bold"
                           className="text-xs text-neutral-500 hover:text-neutral-900 transition-colors"
                         >
-                          {link.label} ↗
-                        </a>
+                          <a
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {link.label} ↗
+                          </a>
+                        </GhostlikeText>
                       ))}
                     </div>
                   )}
@@ -240,29 +270,47 @@ export default function Page() {
       <section id="services" className="mt-24 sm:mt-28">
         <div className="max-w-5xl">
           <h3 className="text-xl font-medium tracking-tight">
-            Services and Capabilities
+            <GhostlikeText variant="auto" delay={300}>
+              Services and Capabilities
+            </GhostlikeText>
           </h3>
           <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <li className="rounded-xl border border-neutral-200 p-5">
-              <h4 className="font-medium">Creative Development</h4>
+              <h4 className="font-medium">
+                <GhostlikeText variant="no-bold">
+                  Creative Development
+                </GhostlikeText>
+              </h4>
               <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
                 Combining thoughtful design with robust implementation in
-                Next.js, React, and TypeScript to create engaging user
-                experiences that solve real problems.
+                <GhostlikeText variant="no-bold"> Next.js</GhostlikeText>,
+                <GhostlikeText variant="no-bold"> React</GhostlikeText>, and
+                <GhostlikeText variant="no-bold"> TypeScript</GhostlikeText> to
+                create engaging user experiences that solve real problems.
               </p>
               <p className="mt-3 text-xs text-neutral-500">$5,000+ · 2-4w</p>
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
-              <h4 className="font-medium">AI Integration & Automation</h4>
+              <h4 className="font-medium">
+                <GhostlikeText variant="no-bold">
+                  AI Integration & Automation
+                </GhostlikeText>
+              </h4>
               <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
-                Custom AI solutions using OpenAI and Anthropic APIs for
-                intelligent automation and analysis. Specialized in prompt
-                engineering and Python-based data processing.
+                Custom AI solutions using{" "}
+                <GhostlikeText variant="no-bold">OpenAI</GhostlikeText> and{" "}
+                <GhostlikeText variant="no-bold">Anthropic APIs</GhostlikeText>{" "}
+                for intelligent automation and analysis. Specialized in prompt
+                engineering and{" "}
+                <GhostlikeText variant="no-bold">Python</GhostlikeText>-based
+                data processing.
               </p>
               <p className="mt-3 text-xs text-neutral-500">$3,000+ · 1-3w</p>
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
-              <h4 className="font-medium">Web Development</h4>
+              <h4 className="font-medium">
+                <GhostlikeText variant="no-bold">Web Development</GhostlikeText>
+              </h4>
               <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
                 Transforming underperforming websites into engaging digital
                 experiences through strategic design, compelling copy, and
@@ -271,20 +319,31 @@ export default function Page() {
               <p className="mt-3 text-xs text-neutral-500">$5,000+ · 3-5w</p>
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
-              <h4 className="font-medium">Technical SEO & Content</h4>
+              <h4 className="font-medium">
+                <GhostlikeText variant="no-bold">
+                  Technical SEO & Content
+                </GhostlikeText>
+              </h4>
               <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
-                Data-driven SEO strategy using SEMrush to identify
-                opportunities, combined with Python automation for content
-                auditing and performance optimization.
+                Data-driven SEO strategy using{" "}
+                <GhostlikeText variant="no-bold">SEMrush</GhostlikeText> to
+                identify opportunities, combined with{" "}
+                <GhostlikeText variant="no-bold">Python</GhostlikeText>{" "}
+                automation for content auditing and performance optimization.
               </p>
               <p className="mt-3 text-xs text-neutral-500">$2,000+ · 1-2w</p>
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
-              <h4 className="font-medium">Design Systems & UI</h4>
+              <h4 className="font-medium">
+                <GhostlikeText variant="no-bold">
+                  Design Systems & UI
+                </GhostlikeText>
+              </h4>
               <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
                 Building comprehensive design systems and component libraries in
-                Figma, translated into production-ready frontend code for
-                scalable products.
+                <GhostlikeText variant="no-bold"> Figma</GhostlikeText>,
+                translated into production-ready frontend code for scalable
+                products.
               </p>
               <p className="mt-3 text-xs text-neutral-500">$2,500+ · 1-3w</p>
             </li>
@@ -292,13 +351,17 @@ export default function Page() {
         </div>
 
         <div id="about" className="mt-16 max-w-3xl">
-          <h3 className="text-xl font-medium tracking-tight">About</h3>
+          <h3 className="text-xl font-medium tracking-tight">
+            <GhostlikeText variant="auto" delay={300}>
+              About
+            </GhostlikeText>
+          </h3>
           <p className="mt-4 text-neutral-600 leading-relaxed">
-            I&apos;m a 2x founder and full-stack developer with 9 years of
+            I&apos;m a 2x founder and full-stack design engineer with 9 years of
             experience delivering impactful solutions for startups and
             enterprise clients. I specialize in creative development, AI
             integration, and intuitive user experiences backed by scalable
-            architecture. Based in Denver, CO.
+            architecture. Based in Boulder, CO.
           </p>
           <div className="mt-6">
             <h4 className="text-sm font-medium text-neutral-900 mb-3">
@@ -307,37 +370,55 @@ export default function Page() {
             <ul className="space-y-3 text-sm text-neutral-600">
               <li className="flex justify-between">
                 <span>
-                  <strong>Archipelago</strong> · Full Stack Developer
+                  <GhostlikeText variant="no-bold">
+                    <strong>Archipelago</strong>
+                  </GhostlikeText>
+                  {" · Full Stack Developer"}
                 </span>
                 <span className="text-neutral-500">2024 → Now</span>
               </li>
               <li className="flex justify-between">
                 <span>
-                  <strong>Act-On</strong> · Freelance Developer
+                  <GhostlikeText variant="no-bold">
+                    <strong>Act-On</strong>
+                  </GhostlikeText>
+                  {" · Freelance Developer"}
                 </span>
                 <span className="text-neutral-500">2024 → 2025</span>
               </li>
               <li className="flex justify-between">
                 <span>
-                  <strong>pATCHES</strong> · Founder / Developer
+                  <GhostlikeText variant="no-bold">
+                    <strong>pATCHES</strong>
+                  </GhostlikeText>
+                  {" · Founder / Developer"}
                 </span>
                 <span className="text-neutral-500">2016 → Now</span>
               </li>
               <li className="flex justify-between">
                 <span>
-                  <strong>Veteran&apos;s United</strong> · SEO / Python
+                  <GhostlikeText variant="no-bold">
+                    <strong>Veteran&apos;s United</strong>
+                  </GhostlikeText>
+                  {" · SEO / Python"}
                 </span>
                 <span className="text-neutral-500">2022</span>
               </li>
               <li className="flex justify-between">
                 <span>
-                  <strong>Marpipe</strong> · Head of Product
+                  <GhostlikeText variant="no-bold">
+                    <strong>Marpipe</strong>
+                  </GhostlikeText>
+                  {" · Head of Product"}
                 </span>
                 <span className="text-neutral-500">2019 → 2020</span>
               </li>
               <li className="flex justify-between">
                 <span>
-                  <strong>Ableton, AG</strong> · Learning Resources
+                  <GhostlikeText variant="no-bold">
+                    <strong>Ableton, AG</strong>
+                  </GhostlikeText>
+                  {" · Learning Resources"}
                 </span>
                 <span className="text-neutral-500">2018</span>
               </li>
@@ -348,18 +429,22 @@ export default function Page() {
         <div id="contact" className="mt-16 max-w-2xl">
           <div className="rounded-2xl border border-neutral-200 p-6">
             <h3 className="text-lg font-medium tracking-tight">
-              Let’s build something calm.
+              <GhostlikeText variant="auto" delay={300}>
+                Let&apos;s build something calm.
+              </GhostlikeText>
             </h3>
             <p className="mt-2 text-neutral-600 leading-relaxed">
               Available for select collaborations, contracts, and advising.
             </p>
             <div className="mt-5">
-              <a
-                href="mailto:dan@danhilse.com?subject=Hello"
-                className="inline-flex items-center rounded-full bg-neutral-900 text-white px-5 py-2.5 text-sm hover:bg-neutral-800 transition"
-              >
-                Email me
-              </a>
+              <GhostlikeText variant="standard">
+                <a
+                  href="mailto:dan@danhilse.com?subject=Hello"
+                  className="inline-flex items-center rounded-full bg-neutral-900 text-white px-5 py-2.5 text-sm hover:bg-neutral-800 transition"
+                >
+                  Email me
+                </a>
+              </GhostlikeText>
             </div>
           </div>
         </div>

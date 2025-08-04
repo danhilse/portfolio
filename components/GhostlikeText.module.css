@@ -1,0 +1,267 @@
+/* components/GhostlikeText.module.css */
+
+.base {
+    color: inherit;
+    text-decoration: none;
+    display: inline;
+  }
+  
+  .base :global(.char) {
+    display: inline;
+    will-change: opacity, transform, text-shadow;
+    white-space: pre-wrap; /* Allow wrapping while preserving spaces */
+  }
+  
+  /* Standard Version - Low opacity start + bold finish */
+  .standard :global(.char) {
+    opacity: 0.3;
+    transform: translateY(0) translateX(0);
+    text-shadow: none;
+    transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+                text-shadow 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0.1s;
+  }
+  
+  .standard:hover :global(.char) {
+    animation: standardGhost 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    transition: none;
+  }
+  
+  .standard:not(:hover) :global(.char) {
+    opacity: 0.3;
+    transform: translateY(0) translateX(0);
+    text-shadow: none;
+    animation: none;
+  }
+  
+  /* No Opacity Version */
+  .noOpacity :global(.char) {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+    text-shadow: none;
+    transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+                text-shadow 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0.1s;
+  }
+  
+  .noOpacity:hover :global(.char) {
+    animation: noOpacityGhost 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    transition: none;
+  }
+  
+  .noOpacity:not(:hover) :global(.char) {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+    text-shadow: none;
+    animation: none;
+  }
+  
+  /* No Bold Version */
+  .noBold :global(.char) {
+    opacity: 0.3;
+    transform: translateY(0) translateX(0);
+    text-shadow: none;
+    transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+                text-shadow 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0.1s;
+  }
+  
+  .noBold:hover :global(.char) {
+    animation: noBoldGhost 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    transition: none;
+  }
+  
+  .noBold:not(:hover) :global(.char) {
+    opacity: 0.3;
+    transform: translateY(0) translateX(0);
+    text-shadow: none;
+    animation: none;
+  }
+  
+  /* Parent Hover Version */
+  .parentHover :global(.char) {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+    text-shadow: none;
+    transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+                text-shadow 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0.1s;
+  }
+  
+  :global(.project-inactive):hover .parentHover :global(.char) {
+    animation: noOpacityGhost 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    transition: none;
+  }
+  
+  :global(.project-item):not(:hover) .parentHover :global(.char),
+  :global(.project-active) .parentHover :global(.char) {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+    text-shadow: none;
+    animation: none;
+  }
+  
+  /* Auto Version */
+  .auto :global(.char) {
+    opacity: 0.3;
+    transform: translateY(0) translateX(0);
+    text-shadow: none;
+    transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+                text-shadow 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0.1s;
+  }
+  
+  .auto.autoTriggered :global(.char) {
+    animation: standardGhost 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    transition: none;
+  }
+  
+  /* Animation delays for all variants */
+  .base:hover :global(.char:nth-child(1)),
+  .auto.autoTriggered :global(.char:nth-child(1)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(1)) { animation-delay: 0s; }
+  
+  .base:hover :global(.char:nth-child(2)),
+  .auto.autoTriggered :global(.char:nth-child(2)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(2)) { animation-delay: 0.018s; }
+  
+  .base:hover :global(.char:nth-child(3)),
+  .auto.autoTriggered :global(.char:nth-child(3)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(3)) { animation-delay: 0.036s; }
+  
+  .base:hover :global(.char:nth-child(4)),
+  .auto.autoTriggered :global(.char:nth-child(4)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(4)) { animation-delay: 0.054s; }
+  
+  .base:hover :global(.char:nth-child(5)),
+  .auto.autoTriggered :global(.char:nth-child(5)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(5)) { animation-delay: 0.072s; }
+  
+  .base:hover :global(.char:nth-child(6)),
+  .auto.autoTriggered :global(.char:nth-child(6)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(6)) { animation-delay: 0.09s; }
+  
+  .base:hover :global(.char:nth-child(7)),
+  .auto.autoTriggered :global(.char:nth-child(7)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(7)) { animation-delay: 0.108s; }
+  
+  .base:hover :global(.char:nth-child(8)),
+  .auto.autoTriggered :global(.char:nth-child(8)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(8)) { animation-delay: 0.126s; }
+  
+  .base:hover :global(.char:nth-child(9)),
+  .auto.autoTriggered :global(.char:nth-child(9)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(9)) { animation-delay: 0.144s; }
+  
+  .base:hover :global(.char:nth-child(10)),
+  .auto.autoTriggered :global(.char:nth-child(10)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(10)) { animation-delay: 0.162s; }
+  
+  .base:hover :global(.char:nth-child(11)),
+  .auto.autoTriggered :global(.char:nth-child(11)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(11)) { animation-delay: 0.18s; }
+  
+  .base:hover :global(.char:nth-child(12)),
+  .auto.autoTriggered :global(.char:nth-child(12)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(12)) { animation-delay: 0.198s; }
+  
+  .base:hover :global(.char:nth-child(13)),
+  .auto.autoTriggered :global(.char:nth-child(13)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(13)) { animation-delay: 0.216s; }
+  
+  .base:hover :global(.char:nth-child(14)),
+  .auto.autoTriggered :global(.char:nth-child(14)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(14)) { animation-delay: 0.234s; }
+  
+  .base:hover :global(.char:nth-child(15)),
+  .auto.autoTriggered :global(.char:nth-child(15)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(15)) { animation-delay: 0.252s; }
+  
+  .base:hover :global(.char:nth-child(16)),
+  .auto.autoTriggered :global(.char:nth-child(16)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(16)) { animation-delay: 0.27s; }
+  
+  .base:hover :global(.char:nth-child(17)),
+  .auto.autoTriggered :global(.char:nth-child(17)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(17)) { animation-delay: 0.288s; }
+  
+  .base:hover :global(.char:nth-child(18)),
+  .auto.autoTriggered :global(.char:nth-child(18)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(18)) { animation-delay: 0.306s; }
+  
+  .base:hover :global(.char:nth-child(19)),
+  .auto.autoTriggered :global(.char:nth-child(19)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(19)) { animation-delay: 0.324s; }
+  
+  .base:hover :global(.char:nth-child(20)),
+  .auto.autoTriggered :global(.char:nth-child(20)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(20)) { animation-delay: 0.342s; }
+  
+  .base:hover :global(.char:nth-child(n+21)),
+  .auto.autoTriggered :global(.char:nth-child(n+21)),
+  :global(.project-inactive):hover .parentHover :global(.char:nth-child(n+21)) { 
+    animation-delay: calc(0.36s + ((var(--i, 0) - 20) * 0.018s)); 
+  }
+  
+  /* Keyframes */
+  @keyframes standardGhost {
+    0% { 
+      opacity: 0.3; 
+      transform: translateY(0) translateX(0);
+      text-shadow: none;
+    }
+    50% { 
+      opacity: 1; 
+      transform: translateY(-2px) translateX(0);
+      text-shadow: 0.3px 0 0 currentColor, -0.3px 0 0 currentColor, 
+                 0 0.3px 0 currentColor, 0 -0.3px 0 currentColor;
+    }
+    100% { 
+      opacity: 0.95; 
+      transform: translateY(0) translateX(0);
+      text-shadow: 0.2px 0 0 currentColor, -0.2px 0 0 currentColor;
+    }
+  }
+  
+  @keyframes noOpacityGhost {
+    0% { 
+      opacity: 1; 
+      transform: translateY(0) translateX(0);
+      text-shadow: none;
+    }
+    50% { 
+      opacity: 1; 
+      transform: translateY(-2px) translateX(0);
+      text-shadow: 0.3px 0 0 currentColor, -0.3px 0 0 currentColor, 
+                 0 0.3px 0 currentColor, 0 -0.3px 0 currentColor;
+    }
+    100% { 
+      opacity: 1; 
+      transform: translateY(0) translateX(0);
+      text-shadow: 0.2px 0 0 currentColor, -0.2px 0 0 currentColor;
+    }
+  }
+  
+  @keyframes noBoldGhost {
+    0% { 
+      opacity: 0.3; 
+      transform: translateY(0) translateX(0);
+      text-shadow: none;
+    }
+    50% { 
+      opacity: 1; 
+      transform: translateY(-2px) translateX(0);
+      text-shadow: 0.3px 0 0 currentColor, -0.3px 0 0 currentColor, 
+                 0 0.3px 0 currentColor, 0 -0.3px 0 currentColor;
+    }
+    100% { 
+      opacity: 0.9; 
+      transform: translateY(0) translateX(0);
+      text-shadow: none;
+    }
+  }
