@@ -140,7 +140,7 @@ export default function Page() {
             <figure className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
               <div
                 className="relative w-full"
-                style={{ height: "calc(100vh - 9rem)" }}
+                style={{ height: "calc(100vh - 4rem)" }}
               >
                 {/* Background layer - previous image */}
                 <Image
@@ -168,40 +168,6 @@ export default function Page() {
                 )}
               </div>
             </figure>
-            <figcaption className="mt-4 relative min-h-[8rem]">
-              {/* <h2 className="text-xl font-medium tracking-tight">
-                {activeProject.title}
-                {activeProject.year ? ` · ${activeProject.year}` : ""}
-              </h2> */}
-              {activeProject.tech && activeProject.tech.length > 0 && (
-                <div
-                  key={`${activeProject.id}-tech`}
-                  className="mb-2 text-xs text-neutral-400 animate-fadeInUp"
-                >
-                  {activeProject.tech.join(" • ")}
-                </div>
-              )}
-              <p
-                key={activeProject.id}
-                className="text-sm text-neutral-600 leading-snug animate-fadeInUp"
-              >
-                {activeProject.blurb}
-              </p>
-
-              {/* {activeProject.links && activeProject.links.length > 0 && (
-                <div className="mt-4 flex gap-4">
-                  {activeProject.links.map((l) => (
-                    <a
-                      key={l.href}
-                      href={l.href}
-                      className="text-sm text-neutral-900 hover:opacity-80"
-                    >
-                      {l.label} →
-                    </a>
-                  ))}
-                </div>
-              )} */}
-            </figcaption>
           </div>
         </div>
 
@@ -212,13 +178,13 @@ export default function Page() {
             <div className="flex items-baseline justify-between">
               <span className="font-semibold tracking-tight">Daniel Hilse</span>
               <nav className="text-sm text-neutral-600">
-                <GhostlikeText
+                {/* <GhostlikeText
                   variant="no-opacity"
                   className="hover:text-neutral-900"
                 >
                   <a href="#services">Services</a>
                 </GhostlikeText>
-                <span className="mx-3 text-neutral-300">/</span>
+                <span className="mx-3 text-neutral-300">/</span> */}
                 <GhostlikeText
                   variant="no-opacity"
                   className="hover:text-neutral-900"
@@ -266,9 +232,9 @@ export default function Page() {
             </p>
           </div>
 
-          {/* Plain text project list */}
+          {/* Expanding project list */}
           <p className="mt-3 text-xs text-neutral-500">
-            Hover a project to view
+            Hover a project to expand details
           </p>
           <ul className="text-neutral-800">
             {projects.map((p) => {
@@ -277,40 +243,65 @@ export default function Page() {
                 <li
                   key={p.id}
                   onMouseEnter={() => setActive(p.id)}
-                  className={`cursor-pointer py-3 border-b border-neutral-200/70 last:border-b-0 transition-all duration-200 ${
+                  className={`cursor-pointer border-b border-neutral-200/70 last:border-b-0 transition-all duration-300 overflow-hidden ${
                     isActive
-                      ? "text-neutral-900 font-semibold pl-2"
-                      : "text-neutral-800 opacity-60 hover:opacity-100 hover:text-neutral-900 hover:pl-1"
+                      ? "text-neutral-900"
+                      : "text-neutral-800 opacity-60 hover:opacity-100 hover:text-neutral-900"
                   }`}
+                  style={{
+                    paddingTop: "12px",
+                    paddingBottom: isActive ? "20px" : "12px",
+                  }}
                 >
-                  <div className="flex items-baseline justify-between gap-4">
-                    <span className="font-medium">{p.title}</span>
-                    <span className="text-xs text-neutral-500">
+                  {/* Title and Year - Always visible */}
+                  <div
+                    className={`flex items-baseline justify-between gap-4 transition-all duration-300 ${
+                      isActive ? "font-semibold pl-2 mb-3" : "font-medium"
+                    }`}
+                  >
+                    <span>{p.title}</span>
+                    <span className="text-xs text-neutral-500 shrink-0">
                       {p.year ?? ""}
                     </span>
                   </div>
-                  {p.links && p.links.length > 0 && (
-                    <div
-                      className="mt-2 flex gap-3"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {p.links.map((link) => (
-                        <GhostlikeText
-                          key={link.href}
-                          variant="no-bold"
-                          className="text-xs text-neutral-500 hover:text-neutral-900 transition-colors"
-                        >
-                          <a
-                            href={link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
+
+                  {/* Expanded content */}
+                  <div
+                    className={`transition-all duration-300 ease-out ${
+                      isActive
+                        ? "max-h-96 opacity-100 pl-2"
+                        : "max-h-0 opacity-0 overflow-hidden"
+                    }`}
+                  >
+                    {/* Description */}
+                    <p className="text-sm text-neutral-600 leading-relaxed mb-3">
+                      {p.blurb}
+                    </p>
+
+                    {/* Links */}
+                    {p.links && p.links.length > 0 && (
+                      <div
+                        className="flex gap-3"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {p.links.map((link) => (
+                          <GhostlikeText
+                            key={link.href}
+                            variant="no-bold"
+                            className="text-xs text-neutral-500 hover:text-neutral-900 transition-colors"
                           >
-                            {link.label} ↗
-                          </a>
-                        </GhostlikeText>
-                      ))}
-                    </div>
-                  )}
+                            <a
+                              href={link.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {link.label} ↗
+                            </a>
+                          </GhostlikeText>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </li>
               );
             })}
@@ -320,61 +311,61 @@ export default function Page() {
 
       {/* Services / About / CTA */}
       <section id="services" className="mt-24 sm:mt-28">
-        <div className="max-w-5xl">
+        {/* <div className="max-w-5xl">
           <h3 className="text-xl font-medium tracking-tight">
             Services and Capabilities
           </h3>
           <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <li className="rounded-xl border border-neutral-200 p-5">
-              <h4 className="font-medium">
-                AI & Automation
-              </h4>
+              <h4 className="font-medium">AI & Automation</h4>
               <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
-                Custom AI tools with Claude and OpenAI APIs for content analysis and workflow automation, incorporated into Python scripts. Turn overwhelming datasets into actionable insights.
+                Custom AI tools with Claude and OpenAI APIs for content analysis
+                and workflow automation, incorporated into Python scripts. Turn
+                overwhelming datasets into actionable insights.
               </p>
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
-              <h4 className="font-medium">
-                Full-Stack Development
-              </h4>
+              <h4 className="font-medium">Full-Stack Development</h4>
               <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
-                Scalable web applications with Next.js, React, and Python. Clean code, fast deployment, modern interfaces that handle real user needs and complex workflows.
+                Scalable web applications with Next.js, React, and Python. Clean
+                code, fast deployment, modern interfaces that handle real user
+                needs and complex workflows.
               </p>
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
-              <h4 className="font-medium">
-                Data Analytics & Visualization
-              </h4>
+              <h4 className="font-medium">Data Analytics & Visualization</h4>
               <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
-                Real-time dashboards and financial models that make complex data understandable. Interactive charts and advanced metrics that help analysts spot patterns and save research time.
+                Real-time dashboards and financial models that make complex data
+                understandable. Interactive charts and advanced metrics that
+                help analysts spot patterns and save research time.
               </p>
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
-              <h4 className="font-medium">
-                Web Scraping & Data Collection
-              </h4>
+              <h4 className="font-medium">Web Scraping & Data Collection</h4>
               <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
-                Robust Python pipelines that turn scattered data into unified databases. Handle complex websites and APIs at scale while staying reliable and undetected.
+                Robust Python pipelines that turn scattered data into unified
+                databases. Handle complex websites and APIs at scale while
+                staying reliable and undetected.
               </p>
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
-              <h4 className="font-medium">
-                UI/UX & Interactive Tools
-              </h4>
+              <h4 className="font-medium">UI/UX & Interactive Tools</h4>
               <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
-                Intuitive interfaces that replace spreadsheets with something more powerful. Responsive designs and reusable component libraries that actually make workflows simpler.
+                Intuitive interfaces that replace spreadsheets with something
+                more powerful. Responsive designs and reusable component
+                libraries that actually make workflows simpler.
               </p>
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
-              <h4 className="font-medium">
-                Technical Strategy & Scaling
-              </h4>
+              <h4 className="font-medium">Technical Strategy & Scaling</h4>
               <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
-                Architecture and infrastructure planning for growing platforms. Drawing from experience scaling pATCHES to 2M+ monthly visitors with cost-effective solutions.
+                Architecture and infrastructure planning for growing platforms.
+                Drawing from experience scaling pATCHES to 2M+ monthly visitors
+                with cost-effective solutions.
               </p>
             </li>
           </ul>
-        </div>
+        </div> */}
 
         <div id="about" className="mt-16 max-w-3xl">
           <h3 className="text-xl font-medium tracking-tight">
@@ -383,13 +374,14 @@ export default function Page() {
             </GhostlikeText>
           </h3>
           <p className="mt-4 text-neutral-600 leading-relaxed">
-            I learned to code scaling a music platform that outgrew every tool I
-            could buy. That led to building audio software, co-founding an
-            adtech startup in NYC, and eventually picked up all the pieces to be
-            an effective full-stack design engineer. Now I build tools that cut
-            research time and automate tedious work for startups and enterprise
-            clients. My business background means I focus on what actually moves
-            the needle, not just what&apos;s technically interesting.
+            I learned to code scaling a music education platform that outgrew
+            every tool I could buy. That led to building audio software,
+            co-founding an adtech startup in NYC, and eventually picked up all
+            the pieces to be an effective full-stack design engineer. Now I
+            build tools that cut research time and automate tedious work for
+            startups and enterprise clients. My business background means I
+            focus on what actually moves the needle, not just what&apos;s
+            technically interesting.
           </p>
           <div className="mt-6">
             <h4 className="text-sm font-medium text-neutral-900 mb-3">
@@ -398,54 +390,42 @@ export default function Page() {
             <ul className="space-y-3 text-sm text-neutral-600">
               <li className="flex justify-between">
                 <span>
-                  <GhostlikeText variant="no-bold">
-                    <strong>Archipelago</strong>
-                  </GhostlikeText>
+                  <strong>Archipelago</strong>
                   {" · Full Stack Developer"}
                 </span>
                 <span className="text-neutral-500">2024 → Now</span>
               </li>
               <li className="flex justify-between">
                 <span>
-                  <GhostlikeText variant="no-bold">
-                    <strong>Act-On</strong>
-                  </GhostlikeText>
+                  <strong>Act-On</strong>
                   {" · Freelance Developer"}
                 </span>
                 <span className="text-neutral-500">2024 → 2025</span>
               </li>
               <li className="flex justify-between">
                 <span>
-                  <GhostlikeText variant="no-bold">
-                    <strong>pATCHES</strong>
-                  </GhostlikeText>
+                  <strong>pATCHES</strong>
                   {" · Founder / Developer"}
                 </span>
                 <span className="text-neutral-500">2016 → Now</span>
               </li>
               <li className="flex justify-between">
                 <span>
-                  <GhostlikeText variant="no-bold">
-                    <strong>Veteran&apos;s United</strong>
-                  </GhostlikeText>
+                  <strong>Veteran&apos;s United</strong>
                   {" · SEO / Python"}
                 </span>
                 <span className="text-neutral-500">2022</span>
               </li>
               <li className="flex justify-between">
                 <span>
-                  <GhostlikeText variant="no-bold">
-                    <strong>Marpipe</strong>
-                  </GhostlikeText>
+                  <strong>Marpipe</strong>
                   {" · Head of Product"}
                 </span>
                 <span className="text-neutral-500">2019 → 2020</span>
               </li>
               <li className="flex justify-between">
                 <span>
-                  <GhostlikeText variant="no-bold">
-                    <strong>Ableton, AG</strong>
-                  </GhostlikeText>
+                  <strong>Ableton, AG</strong>
                   {" · Learning Resources"}
                 </span>
                 <span className="text-neutral-500">2018</span>
@@ -457,22 +437,18 @@ export default function Page() {
         <div id="contact" className="mt-16 max-w-2xl">
           <div className="rounded-2xl border border-neutral-200 p-6">
             <h3 className="text-lg font-medium tracking-tight">
-              <GhostlikeText variant="auto" delay={300}>
-                Let&apos;s build something calm.
-              </GhostlikeText>
+              Let&apos;s build something calm.
             </h3>
             <p className="mt-2 text-neutral-600 leading-relaxed">
               Available for select collaborations, contracts, and advising.
             </p>
             <div className="mt-5">
-              <GhostlikeText variant="standard">
-                <a
-                  href="mailto:dan@danhilse.com?subject=Hello"
-                  className="inline-flex items-center rounded-full bg-neutral-900 text-white px-5 py-2.5 text-sm hover:bg-neutral-800 transition"
-                >
-                  Email me
-                </a>
-              </GhostlikeText>
+              <a
+                href="mailto:dan@danhilse.com?subject=Hello"
+                className="inline-flex items-center rounded-full bg-neutral-900 text-white px-5 py-2.5 text-sm hover:bg-neutral-700 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+              >
+                Email me
+              </a>
             </div>
           </div>
         </div>
