@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 import GhostlikeText from "@/components/GhostlikeText";
 
@@ -12,30 +12,53 @@ type Project = {
   image: string;
   alt: string;
   year?: string;
+  tech?: string[];
   links?: { label: string; href: string }[];
 };
 
 const projects: Project[] = [
   {
     id: "archipelago",
-    title: "Archipelago - Stock Market Analysis",
+    title: "Archipelago - Financial Analytics Platform",
     year: "2025",
     blurb:
-      "Full-stack biotech market analysis dashboard built with Next.js and FastAPI, featuring real-time price tracking, interactive visualizations, and comprehensive financial metrics.",
+      "Financial analytics platform with real-time and historical market data and 40+ normalized metrics stored in Postgres and delivered via FastAPI. Bespoke, interactive d3.js charts that reveal market relationships and investors depend on.",
+    tech: ["Python", "Next.js", "PostgreSQL"],
     image: "/projects/project-1.png",
-    alt: "Stock market analysis dashboard",
+    alt: "Financial analytics platform",
     links: [
       { label: "Live Demo", href: "https://archipelago.example.com" },
       { label: "GitHub", href: "https://github.com/yourusername/archipelago" },
     ],
   },
   {
+    id: "boulevard-quartz",
+    title: "Boulevard Quartz - Commercial Real Estate Platform",
+    year: "2025",
+    blurb:
+      "Commercial real estate aggregation platform that scrapes local Missouri broker websites. Property search with interactive Mapbox maps, turning scattered listings into a unified database for easier property discovery.",
+    tech: ["Python", "Next.js", "PostgreSQL"],
+    image: "/projects/project-2.png",
+    alt: "Commercial real estate platform",
+  },
+  {
+    id: "nonprofit-roi",
+    title: "Nonprofit Fundraising ROI Calculator",
+    year: "2025",
+    blurb:
+      "Web calculator helping nonprofits model paid advertising ROI across lead-generation and direct-appeal strategies. Real-time projections with industry-benchmarked conversion rates for data-driven budget decisions.",
+    tech: ["Next.js", "TypeScript", "React"],
+    image: "/projects/project-3.png",
+    alt: "Nonprofit ROI calculator",
+  },
+  {
     id: "customer-reference",
     title: "Customer Reference Agent",
     year: "2025",
     blurb:
-      "AI-powered Customer Reference Agent using Anthropic's Claude for Act-On's sales team, instantly surfacing relevant customer quotes and testimonials, streamlining personalized sales pitches.",
-    image: "/projects/project-2.png",
+      "AI-powered sales tool for Act-On's sales team, instantly surfacing relevant customer quotes and testimonials from their Salesforce database to streamline personalized sales pitches.",
+    tech: ["Claude", "Next.js", "FastAPI"],
+    image: "/projects/project-4.png",
     alt: "AI-powered reference agent interface",
     links: [
       { label: "Case Study", href: "https://acton.com/customer-reference" },
@@ -46,66 +69,67 @@ const projects: Project[] = [
     title: "Blog Analysis",
     year: "2025",
     blurb:
-      "Python-based content audit system using Anthropic's Claude API for Act-On's marketing team, analyzing 2000+ blog posts for brand alignment and SEO, saving content team months of planned work.",
-    image: "/projects/project-3.png",
+      "Python-based content audit system using Anthropic's Claude API for Act-On's marketing team, analyzing 2000+ blog posts for brand alignment and SEO in hours instead of months.",
+    tech: ["Python", "AI/Claude", "Data Analysis"],
+    image: "/projects/project-5.png",
     alt: "Blog content analysis dashboard",
     links: [{ label: "Case Study", href: "https://acton.com/blog-analysis" }],
+  },
+  {
+    id: "patches",
+    title: "pATCHES - Music Education Platform",
+    year: "ongoing",
+    blurb:
+      "Music education platform and JavaScript plugin ecosystem reaching 2M+ visitors, combining educational content with professional audio software, generating over $200k in plugin sales since 2016.",
+    tech: ["JavaScript", "AWS", "Web Analytics"],
+    image: "/projects/project-6.png",
+    alt: "pATCHES music education platform",
+    links: [{ label: "Website", href: "https://patches.com" }],
   },
   {
     id: "listen-too",
     title: "Listen Too",
     year: "2023",
     blurb:
-      "Next.js web application using TypeScript and Tailwind that generates shareable Spotify playlists from users' top tracks, featuring OAuth integration and a responsive interface.",
-    image: "/projects/project-4.png",
+      "Next.js web application that generates shareable Spotify playlists from users' top tracks with a responsive interface built with TypeScript and Tailwind.",
+    tech: ["Next.js", "TypeScript", "OAuth"],
+    image: "/projects/project-7.png",
     alt: "Spotify playlist generator",
     links: [
       { label: "Live Demo", href: "https://listentoo.app" },
       { label: "GitHub", href: "https://github.com/yourusername/listen-too" },
     ],
   },
-  {
-    id: "brand-coach",
-    title: "Brand Coach",
-    year: "2024",
-    blurb:
-      "AI-powered content evaluation tool that helps marketing teams align their writing with brand guidelines. Built with Next.js, TypeScript, and the Claude API for real-time analysis.",
-    image: "/projects/project-5.png",
-    alt: "Brand content evaluation tool",
-    links: [
-      { label: "GitHub", href: "https://github.com/yourusername/brand-coach" },
-    ],
-  },
-  {
-    id: "patches",
-    title: "pATCHES",
-    year: "ongoing",
-    blurb:
-      "Educational music platform and JavaScript plugin ecosystem serving 2M+ users, featuring optimized AWS infrastructure and generating over $200k software sales.",
-    image: "/projects/project-6.png",
-    alt: "pATCHES music education platform",
-    links: [{ label: "Website", href: "https://patches.com" }],
-  },
-  {
-    id: "url-reader",
-    title: "URL Reader",
-    year: "2024",
-    blurb:
-      "Get an audio version of a web page in a podcast feed. Utilizing OpenAI's Text-to-Speech API, featuring automated article scraping, AWS hosting, and custom RSS feed generation.",
-    image: "/projects/project-7.png",
-    alt: "URL to audio conversion tool",
-    links: [
-      { label: "GitHub", href: "https://github.com/yourusername/url-reader" },
-    ],
-  },
 ];
 
 export default function Page() {
   const [active, setActive] = useState(projects[0].id);
+  const [imageStates, setImageStates] = useState<Record<string, boolean>>({});
+  const [displayedProject, setDisplayedProject] = useState(projects[0]);
 
   const activeProject = useMemo(() => {
     return projects.find((p) => p.id === active) ?? projects[0];
   }, [active]);
+
+  // Preload images
+  useEffect(() => {
+    projects.forEach((project) => {
+      const img = new window.Image();
+      img.src = project.image;
+      img.onload = () => {
+        setImageStates((prev) => ({ ...prev, [project.id]: true }));
+      };
+    });
+  }, []);
+
+  // Handle smooth transition between projects
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDisplayedProject(activeProject);
+    }, 150); // Half of transition duration
+
+    return () => clearTimeout(timer);
+  }, [activeProject]);
 
   return (
     <div className="py-6 sm:py-8">
@@ -116,27 +140,54 @@ export default function Page() {
             <figure className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
               <div
                 className="relative w-full"
-                style={{ height: "calc(100vh - 7rem)" }}
+                style={{ height: "calc(100vh - 9rem)" }}
               >
+                {/* Background layer - previous image */}
                 <Image
-                  key={activeProject.image}
-                  src={activeProject.image}
-                  alt={activeProject.alt}
+                  src={displayedProject.image}
+                  alt={displayedProject.alt}
                   fill
                   sizes="(min-width: 1024px) 56vw, 100vw"
-                  className="object-cover transition-opacity duration-300"
+                  className="object-cover"
                   priority
                 />
+
+                {/* Foreground layer - active image with fade */}
+                {activeProject.id !== displayedProject.id && (
+                  <div className="absolute inset-0">
+                    <Image
+                      key={activeProject.id}
+                      src={activeProject.image}
+                      alt={activeProject.alt}
+                      fill
+                      sizes="(min-width: 1024px) 56vw, 100vw"
+                      className="object-cover animate-scaleIn"
+                      priority
+                    />
+                  </div>
+                )}
               </div>
             </figure>
-            <figcaption className="mt-4">
+            <figcaption className="mt-4 relative min-h-[8rem]">
               {/* <h2 className="text-xl font-medium tracking-tight">
                 {activeProject.title}
                 {activeProject.year ? ` · ${activeProject.year}` : ""}
               </h2> */}
-              <p className="mt-2 text-sm text-neutral-600 leading-snug">
+              {activeProject.tech && activeProject.tech.length > 0 && (
+                <div
+                  key={`${activeProject.id}-tech`}
+                  className="mb-2 text-xs text-neutral-400 animate-fadeInUp"
+                >
+                  {activeProject.tech.join(" • ")}
+                </div>
+              )}
+              <p
+                key={activeProject.id}
+                className="text-sm text-neutral-600 leading-snug animate-fadeInUp"
+              >
                 {activeProject.blurb}
               </p>
+
               {/* {activeProject.links && activeProject.links.length > 0 && (
                 <div className="mt-4 flex gap-4">
                   {activeProject.links.map((l) => (
@@ -191,26 +242,27 @@ export default function Page() {
               Calm, modern web apps.
             </h1> */}
             <p className="mt-4 text-neutral-600 leading-relaxed">
-              I&apos;m a full‑stack design engineer based in Boulder, CO focused
-              on building{" "}
+              I&apos;m an MBA-turned-full‑stack developer based in Boulder, CO
+              building{" "}
               <GhostlikeText variant="auto" delay={400}>
                 <strong>calm, modern interfaces</strong>
               </GhostlikeText>{" "}
               and{" "}
               <GhostlikeText variant="auto" delay={1000}>
-                reliable systems.
+                reliable systems
               </GhostlikeText>{" "}
-              I&apos;m a 2x founder and full-stack developer with 9 years of
-              experience delivering impactful solutions for startups and
-              enterprise clients using{" "}
-              <GhostlikeText variant="auto" delay={2000}>
-                Python
-              </GhostlikeText>{" "}
-              and{" "}
-              <GhostlikeText variant="auto" delay={2400}>
-                React
+              using{" "}
+              <GhostlikeText variant="auto" delay={1600}>
+                <strong>Python</strong>
               </GhostlikeText>
-              .
+              ,{" "}
+              <GhostlikeText variant="auto" delay={2000}>
+                <strong>React</strong>
+              </GhostlikeText>
+              , and{" "}
+              <GhostlikeText variant="auto" delay={2400}>
+                <strong>Next.js</strong>
+              </GhostlikeText>
             </p>
           </div>
 
@@ -225,10 +277,10 @@ export default function Page() {
                 <li
                   key={p.id}
                   onMouseEnter={() => setActive(p.id)}
-                  className={`cursor-pointer py-3 border-b border-neutral-200/70 last:border-b-0 transition-colors ${
+                  className={`cursor-pointer py-3 border-b border-neutral-200/70 last:border-b-0 transition-all duration-200 ${
                     isActive
-                      ? "text-neutral-900 font-semibold"
-                      : "text-neutral-800 opacity-60 hover:opacity-100 hover:text-neutral-900"
+                      ? "text-neutral-900 font-semibold pl-2"
+                      : "text-neutral-800 opacity-60 hover:opacity-100 hover:text-neutral-900 hover:pl-1"
                   }`}
                 >
                   <div className="flex items-baseline justify-between gap-4">
@@ -239,7 +291,7 @@ export default function Page() {
                   </div>
                   {p.links && p.links.length > 0 && (
                     <div
-                      className="mt-1 flex gap-3"
+                      className="mt-2 flex gap-3"
                       onClick={(e) => e.stopPropagation()}
                     >
                       {p.links.map((link) => (
@@ -270,82 +322,56 @@ export default function Page() {
       <section id="services" className="mt-24 sm:mt-28">
         <div className="max-w-5xl">
           <h3 className="text-xl font-medium tracking-tight">
-            <GhostlikeText variant="auto" delay={300}>
-              Services and Capabilities
-            </GhostlikeText>
+            Services and Capabilities
           </h3>
           <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <li className="rounded-xl border border-neutral-200 p-5">
               <h4 className="font-medium">
-                <GhostlikeText variant="no-bold">
-                  Creative Development
-                </GhostlikeText>
+                AI & Automation
               </h4>
               <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
-                Combining thoughtful design with robust implementation in
-                <GhostlikeText variant="no-bold"> Next.js</GhostlikeText>,
-                <GhostlikeText variant="no-bold"> React</GhostlikeText>, and
-                <GhostlikeText variant="no-bold"> TypeScript</GhostlikeText> to
-                create engaging user experiences that solve real problems.
+                Custom AI tools with Claude and OpenAI APIs for content analysis and workflow automation, incorporated into Python scripts. Turn overwhelming datasets into actionable insights.
               </p>
-              <p className="mt-3 text-xs text-neutral-500">$5,000+ · 2-4w</p>
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
               <h4 className="font-medium">
-                <GhostlikeText variant="no-bold">
-                  AI Integration & Automation
-                </GhostlikeText>
+                Full-Stack Development
               </h4>
               <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
-                Custom AI solutions using{" "}
-                <GhostlikeText variant="no-bold">OpenAI</GhostlikeText> and{" "}
-                <GhostlikeText variant="no-bold">Anthropic APIs</GhostlikeText>{" "}
-                for intelligent automation and analysis. Specialized in prompt
-                engineering and{" "}
-                <GhostlikeText variant="no-bold">Python</GhostlikeText>-based
-                data processing.
+                Scalable web applications with Next.js, React, and Python. Clean code, fast deployment, modern interfaces that handle real user needs and complex workflows.
               </p>
-              <p className="mt-3 text-xs text-neutral-500">$3,000+ · 1-3w</p>
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
               <h4 className="font-medium">
-                <GhostlikeText variant="no-bold">Web Development</GhostlikeText>
+                Data Analytics & Visualization
               </h4>
               <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
-                Transforming underperforming websites into engaging digital
-                experiences through strategic design, compelling copy, and
-                smooth animations that drive conversions.
+                Real-time dashboards and financial models that make complex data understandable. Interactive charts and advanced metrics that help analysts spot patterns and save research time.
               </p>
-              <p className="mt-3 text-xs text-neutral-500">$5,000+ · 3-5w</p>
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
               <h4 className="font-medium">
-                <GhostlikeText variant="no-bold">
-                  Technical SEO & Content
-                </GhostlikeText>
+                Web Scraping & Data Collection
               </h4>
               <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
-                Data-driven SEO strategy using{" "}
-                <GhostlikeText variant="no-bold">SEMrush</GhostlikeText> to
-                identify opportunities, combined with{" "}
-                <GhostlikeText variant="no-bold">Python</GhostlikeText>{" "}
-                automation for content auditing and performance optimization.
+                Robust Python pipelines that turn scattered data into unified databases. Handle complex websites and APIs at scale while staying reliable and undetected.
               </p>
-              <p className="mt-3 text-xs text-neutral-500">$2,000+ · 1-2w</p>
             </li>
             <li className="rounded-xl border border-neutral-200 p-5">
               <h4 className="font-medium">
-                <GhostlikeText variant="no-bold">
-                  Design Systems & UI
-                </GhostlikeText>
+                UI/UX & Interactive Tools
               </h4>
               <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
-                Building comprehensive design systems and component libraries in
-                <GhostlikeText variant="no-bold"> Figma</GhostlikeText>,
-                translated into production-ready frontend code for scalable
-                products.
+                Intuitive interfaces that replace spreadsheets with something more powerful. Responsive designs and reusable component libraries that actually make workflows simpler.
               </p>
-              <p className="mt-3 text-xs text-neutral-500">$2,500+ · 1-3w</p>
+            </li>
+            <li className="rounded-xl border border-neutral-200 p-5">
+              <h4 className="font-medium">
+                Technical Strategy & Scaling
+              </h4>
+              <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
+                Architecture and infrastructure planning for growing platforms. Drawing from experience scaling pATCHES to 2M+ monthly visitors with cost-effective solutions.
+              </p>
             </li>
           </ul>
         </div>
@@ -357,11 +383,13 @@ export default function Page() {
             </GhostlikeText>
           </h3>
           <p className="mt-4 text-neutral-600 leading-relaxed">
-            I&apos;m a 2x founder and full-stack design engineer with 9 years of
-            experience delivering impactful solutions for startups and
-            enterprise clients. I specialize in creative development, AI
-            integration, and intuitive user experiences backed by scalable
-            architecture. Based in Boulder, CO.
+            I learned to code scaling a music platform that outgrew every tool I
+            could buy. That led to building audio software, co-founding an
+            adtech startup in NYC, and eventually picked up all the pieces to be
+            an effective full-stack design engineer. Now I build tools that cut
+            research time and automate tedious work for startups and enterprise
+            clients. My business background means I focus on what actually moves
+            the needle, not just what&apos;s technically interesting.
           </p>
           <div className="mt-6">
             <h4 className="text-sm font-medium text-neutral-900 mb-3">

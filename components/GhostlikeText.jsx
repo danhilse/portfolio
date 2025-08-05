@@ -1,5 +1,5 @@
 // components/GhostlikeText.jsx
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './GhostlikeText.module.css';
 
 const GhostlikeText = ({ 
@@ -10,12 +10,18 @@ const GhostlikeText = ({
   ...props 
 }) => {
   const textRef = useRef(null);
+  const [isInitialized, setIsInitialized] = useState(false);
 
+  // Initialize character spans on mount
   useEffect(() => {
     const element = textRef.current;
-    if (!element || element.querySelector('.char')) return;
+    if (!element) return;
 
+    // Get the original text content
     const text = element.textContent;
+    if (!text || element.querySelector('.char')) return;
+
+    // Clear and rebuild the character spans
     element.innerHTML = '';
     
     let charIndex = 0;
@@ -28,15 +34,22 @@ const GhostlikeText = ({
       charIndex++;
     }
 
-    // Auto-trigger animation for 'auto' variant
-    if (variant === 'auto') {
-      const timer = setTimeout(() => {
-        element.classList.add(styles.autoTriggered);
-      }, delay);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [children, variant, delay]);
+    setIsInitialized(true);
+  }, []); // Run only on mount
+
+  // Handle auto animation after initialization
+  useEffect(() => {
+    if (!isInitialized || variant !== 'auto') return;
+
+    const element = textRef.current;
+    if (!element) return;
+
+    const timer = setTimeout(() => {
+      element.classList.add(styles.autoTriggered);
+    }, delay);
+    
+    return () => clearTimeout(timer);
+  }, [isInitialized, variant, delay]);
 
   const getVariantClass = () => {
     switch (variant) {
