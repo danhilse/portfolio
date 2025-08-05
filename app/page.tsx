@@ -14,6 +14,7 @@ type Project = {
   year?: string;
   tech?: string[];
   links?: { label: string; href: string }[];
+  isVideo?: boolean;
 };
 
 const projects: Project[] = [
@@ -24,8 +25,9 @@ const projects: Project[] = [
     blurb:
       "Financial analytics platform with real-time and historical market data and 40+ normalized metrics stored in Postgres and delivered via FastAPI. Bespoke, interactive d3.js charts that reveal market relationships and investors depend on.",
     tech: ["Python", "Next.js", "PostgreSQL"],
-    image: "/projects/project-1.png",
+    image: "/test.mp4",
     alt: "Financial analytics platform",
+    isVideo: true,
     links: [
       { label: "Live Demo", href: "https://archipelago.example.com" },
       { label: "GitHub", href: "https://github.com/yourusername/archipelago" },
@@ -111,14 +113,19 @@ export default function Page() {
     return projects.find((p) => p.id === active) ?? projects[0];
   }, [active]);
 
-  // Preload images
+  // Preload images and videos
   useEffect(() => {
     projects.forEach((project) => {
-      const img = new window.Image();
-      img.src = project.image;
-      img.onload = () => {
+      if (project.isVideo) {
+        // For videos, we'll just mark as loaded immediately
         setImageStates((prev) => ({ ...prev, [project.id]: true }));
-      };
+      } else {
+        const img = new window.Image();
+        img.src = project.image;
+        img.onload = () => {
+          setImageStates((prev) => ({ ...prev, [project.id]: true }));
+        };
+      }
     });
   }, []);
 
@@ -142,28 +149,51 @@ export default function Page() {
                 className="relative w-full"
                 style={{ height: "calc(100vh - 4rem)" }}
               >
-                {/* Background layer - previous image */}
-                <Image
-                  src={displayedProject.image}
-                  alt={displayedProject.alt}
-                  fill
-                  sizes="(min-width: 1024px) 56vw, 100vw"
-                  className="object-cover"
-                  priority
-                />
+                {/* Background layer - previous image/video */}
+                {displayedProject.isVideo ? (
+                  <video
+                    src={displayedProject.image}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                ) : (
+                  <Image
+                    src={displayedProject.image}
+                    alt={displayedProject.alt}
+                    fill
+                    sizes="(min-width: 1024px) 56vw, 100vw"
+                    className="object-cover"
+                    priority
+                  />
+                )}
 
-                {/* Foreground layer - active image with fade */}
+                {/* Foreground layer - active image/video with fade */}
                 {activeProject.id !== displayedProject.id && (
                   <div className="absolute inset-0">
-                    <Image
-                      key={activeProject.id}
-                      src={activeProject.image}
-                      alt={activeProject.alt}
-                      fill
-                      sizes="(min-width: 1024px) 56vw, 100vw"
-                      className="object-cover animate-scaleIn"
-                      priority
-                    />
+                    {activeProject.isVideo ? (
+                      <video
+                        key={activeProject.id}
+                        src={activeProject.image}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover animate-scaleIn"
+                      />
+                    ) : (
+                      <Image
+                        key={activeProject.id}
+                        src={activeProject.image}
+                        alt={activeProject.alt}
+                        fill
+                        sizes="(min-width: 1024px) 56vw, 100vw"
+                        className="object-cover animate-scaleIn"
+                        priority
+                      />
+                    )}
                   </div>
                 )}
               </div>
