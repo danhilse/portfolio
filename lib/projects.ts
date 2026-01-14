@@ -27,8 +27,8 @@ export const projects: Project[] = [
     alt: "Financial analytics platform",
     isVideo: true,
     links: [
+      { label: "Case Study", href: "/case-study/archipelago" },
       { label: "Live", href: "https://archipelago.example.com" },
-      { label: "GitHub", href: "https://github.com/yourusername/archipelago" },
     ],
   },
   {

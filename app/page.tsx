@@ -57,50 +57,54 @@ function ProjectRow({
             }}
           >
             <div className="pt-6">
-              <p className="text-muted text-sm leading-relaxed max-w-2xl mb-6">
-                {project.blurb}
-              </p>
+              <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6">
+                <div>
+                  <p className="text-muted text-sm leading-relaxed max-w-2xl mb-6">
+                    {project.blurb}
+                  </p>
 
-              <div className="flex flex-wrap gap-2 mb-6">
-                {project.tech.map((tech) => (
-                  <span
-                    key={tech}
-                    className="text-xs text-muted/80 bg-foreground/[0.03] border border-border px-2.5 py-1 rounded-full"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              {project.links && project.links.length > 0 && (
-                <div className="flex gap-6">
-                  {project.links.map((link) => (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="text-xs text-foreground hover:text-accent transition-colors duration-300 flex items-center gap-1.5 group/link"
-                    >
-                      {link.label}
-                      <svg
-                        className="w-3 h-3 transition-transform duration-300 group-hover/link:translate-x-0.5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tech) => (
+                      <span
+                        key={tech}
+                        className="text-xs text-muted/80 bg-foreground/[0.03] border border-border px-2.5 py-1 rounded-full"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                        />
-                      </svg>
-                    </a>
-                  ))}
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              )}
+
+                {project.links && project.links.length > 0 && (
+                  <div className="flex gap-6 shrink-0">
+                    {project.links.map((link) => (
+                      <a
+                        key={link.label}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="text-xs text-foreground hover:text-accent transition-colors duration-300 flex items-center gap-1.5 group/link"
+                      >
+                        {link.label}
+                        <svg
+                          className="w-3 h-3 transition-transform duration-300 group-hover/link:translate-x-0.5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+                          />
+                        </svg>
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -256,9 +260,55 @@ export default function Home() {
             About
           </h2>
           <div className="grid md:grid-cols-[1fr_1fr] gap-12 md:gap-16">
-            <p className="text-sm text-muted leading-relaxed whitespace-pre-line">
-              {about}
-            </p>
+            <div>
+              <p className="text-sm text-muted leading-relaxed whitespace-pre-line mb-8">
+                {about}
+              </p>
+              <div className="flex gap-6">
+                <a
+                  href="https://github.com/yourusername"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-foreground hover:text-accent transition-colors duration-300 flex items-center gap-1.5 group"
+                >
+                  GitHub
+                  <svg
+                    className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+                    />
+                  </svg>
+                </a>
+                <a
+                  href="https://linkedin.com/in/yourusername"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-foreground hover:text-accent transition-colors duration-300 flex items-center gap-1.5 group"
+                >
+                  LinkedIn
+                  <svg
+                    className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
             <div className="space-y-8">
               <div>
                 <h3 className="text-xs text-muted/50 uppercase tracking-widest mb-4">
@@ -311,27 +361,33 @@ export default function Home() {
 
         {/* Experience */}
         <section className="py-24 md:py-32">
-          <h2 className="text-xs text-muted uppercase tracking-widest mb-12">
+          <h2 className="text-xs text-muted uppercase tracking-widest mb-16">
             Experience
           </h2>
-          <div>
-            {experience.map((exp, index) => (
-              <div
-                key={index}
-                className="grid grid-cols-[1fr_auto] md:grid-cols-[140px_1fr_auto] gap-2 md:gap-8 py-5 border-b border-border"
-              >
-                <span className="text-xs text-muted/50 order-2 md:order-1">
-                  {exp.period}
-                </span>
-                <div className="order-1 md:order-2">
-                  <h3 className="text-sm font-medium">{exp.company}</h3>
-                  <p className="text-xs text-muted">{exp.role}</p>
+          <div className="relative">
+            {/* Continuous line */}
+            <div className="absolute left-[156px] top-2 bottom-2 w-px bg-border hidden md:block" />
+
+            <div className="space-y-12 md:space-y-16">
+              {experience.map((exp, index) => (
+                <div key={index} className="grid md:grid-cols-[140px_32px_1fr] gap-0 md:gap-0 relative items-start">
+                  <p className="text-xs text-muted/50 md:text-right leading-5">{exp.period}</p>
+
+                  {/* Dot column */}
+                  <div className="hidden md:flex justify-center">
+                    <div className="w-[9px] h-[9px] mt-[5px] rounded-full bg-border ring-[3px] ring-background" />
+                  </div>
+
+                  <div>
+                    <h3 className="text-sm font-medium mb-1 leading-5">{exp.company}</h3>
+                    <p className="text-xs text-muted mb-3">{exp.role}</p>
+                    <p className="text-sm text-muted/70 leading-relaxed">
+                      {exp.description}
+                    </p>
+                  </div>
                 </div>
-                <p className="text-xs text-muted/50 hidden md:block order-3 text-right max-w-[240px]">
-                  {exp.description}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
       </main>
@@ -389,9 +445,6 @@ export default function Home() {
                 Resume
               </a>
             </div>
-          </div>
-          <div className="mt-12 pt-8 border-t border-border text-xs text-muted/50">
-            &copy; {new Date().getFullYear()} Echo Roberts
           </div>
         </div>
       </footer>
