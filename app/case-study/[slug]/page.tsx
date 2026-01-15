@@ -1,10 +1,50 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { caseStudies } from "@/lib/case-studies";
+import { caseStudies } from "@/lib/case-studies/index";
 
 export async function generateStaticParams() {
   return Object.keys(caseStudies).map((slug) => ({ slug }));
+}
+
+import type { MediaItem } from "@/lib/case-studies/types";
+
+function CaptionedMedia({
+  media,
+  alt,
+  priority = false,
+}: {
+  media: MediaItem;
+  alt: string;
+  priority?: boolean;
+}) {
+  return (
+    <figure className="mt-6">
+      <div className="relative aspect-video rounded-lg overflow-hidden border border-border">
+        {media.type === "video" ? (
+          <video
+            src={media.src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <Image
+            src={media.src}
+            alt={alt}
+            fill
+            className="object-cover"
+            priority={priority}
+          />
+        )}
+      </div>
+      <figcaption className="mt-2 text-xs text-muted/60 italic">
+        {media.caption}
+      </figcaption>
+    </figure>
+  );
 }
 
 export default async function CaseStudyPage({
@@ -23,9 +63,9 @@ export default async function CaseStudyPage({
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link
-            href="/"
+            href="/#work"
             className="text-xs text-muted hover:text-foreground transition-colors duration-300 flex items-center gap-2"
           >
             <svg
@@ -47,172 +87,140 @@ export default async function CaseStudyPage({
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6">
+      <main className="max-w-3xl mx-auto px-6">
         {/* Hero */}
-        <section className="pt-32 pb-16 md:pt-40 md:pb-20">
-          <p className="text-xs text-muted uppercase tracking-widest mb-4 animate-fade-up">
-            Case Study
-          </p>
-          <h1
-            className="text-3xl md:text-4xl font-medium tracking-tight mb-3 animate-fade-up"
-            style={{ animationDelay: "50ms" }}
-          >
+        <section className="pt-32 pb-12 md:pt-40 md:pb-16">
+          <h1 className="text-2xl md:text-3xl font-medium tracking-tight mb-3 animate-fade-up">
             {study.title}
           </h1>
           <p
-            className="text-muted text-lg mb-8 animate-fade-up"
-            style={{ animationDelay: "100ms" }}
+            className="text-muted text-sm md:text-base leading-relaxed mb-8 animate-fade-up"
+            style={{ animationDelay: "50ms" }}
           >
-            {study.subtitle}
+            {study.tagline}
           </p>
 
-          {/* Meta */}
           <div
-            className="flex flex-wrap gap-x-8 gap-y-4 text-xs animate-fade-up"
-            style={{ animationDelay: "150ms" }}
+            className="flex flex-wrap gap-x-8 gap-y-3 text-xs animate-fade-up"
+            style={{ animationDelay: "100ms" }}
           >
             <div>
-              <span className="text-muted/50 uppercase tracking-wider">Role</span>
-              <p className="mt-1">{study.role}</p>
+              <span className="text-muted/50">Role</span>
+              <p className="mt-0.5">{study.role}</p>
             </div>
             <div>
-              <span className="text-muted/50 uppercase tracking-wider">Timeline</span>
-              <p className="mt-1">{study.timeline}</p>
+              <span className="text-muted/50">Timeline</span>
+              <p className="mt-0.5">{study.timeline}</p>
             </div>
             <div>
-              <span className="text-muted/50 uppercase tracking-wider">Stack</span>
-              <div className="flex flex-wrap gap-2 mt-1">
-                {study.stack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="bg-foreground/[0.03] border border-border/50 px-2 py-0.5 rounded-full"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
+              <span className="text-muted/50">Stack</span>
+              <p className="mt-0.5">{study.stack.join(" · ")}</p>
             </div>
           </div>
         </section>
 
-        {/* Hero Image */}
-        {study.images[0] && (
-          <section
-            className="mb-16 md:mb-20 animate-fade-up"
-            style={{ animationDelay: "200ms" }}
-          >
-            <div className="relative aspect-video rounded-lg overflow-hidden border border-border bg-foreground/[0.02]">
+        {/* Hero Media */}
+        <section
+          className="mb-16 animate-fade-up"
+          style={{ animationDelay: "150ms" }}
+        >
+          <div className="relative aspect-video rounded-lg overflow-hidden border border-border">
+            {study.heroMedia.type === "video" ? (
+              <video
+                src={study.heroMedia.src}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            ) : (
               <Image
-                src={study.images[0]}
+                src={study.heroMedia.src}
                 alt={study.title}
                 fill
                 className="object-cover"
                 priority
               />
-            </div>
-          </section>
-        )}
-
-        {/* Overview */}
-        <section className="mb-16 md:mb-20">
-          <h2 className="text-xs text-muted uppercase tracking-widest mb-4">
-            Overview
-          </h2>
-          <p className="text-sm leading-relaxed max-w-2xl">{study.overview}</p>
+            )}
+          </div>
         </section>
 
         {/* Problem */}
-        <section className="mb-16 md:mb-20">
-          <h2 className="text-xs text-muted uppercase tracking-widest mb-4">
+        <section className="mb-16">
+          <h2 className="text-xs text-muted/50 uppercase tracking-widest mb-4">
             The Problem
           </h2>
-          <p className="text-sm text-muted leading-relaxed max-w-2xl">
-            {study.problem}
-          </p>
+          <p className="text-sm leading-relaxed mb-6">{study.problem.context}</p>
+          <ul className="space-y-3">
+            {study.problem.breakdown.map((point, i) => (
+              <li key={i} className="text-sm text-muted leading-relaxed flex gap-3">
+                <span className="text-accent/60 shrink-0">—</span>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
         </section>
 
-        {/* Features */}
-        <section className="mb-16 md:mb-20">
-          <h2 className="text-xs text-muted uppercase tracking-widest mb-8">
-            Key Features
+        {/* Key Decisions */}
+        <section className="mb-16">
+          <h2 className="text-xs text-muted/50 uppercase tracking-widest mb-8">
+            Key Decisions
           </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {study.features.map((feature, index) => (
-              <div key={index} className="space-y-2">
-                <h3 className="text-sm font-medium">{feature.title}</h3>
-                <p className="text-xs text-muted leading-relaxed">
-                  {feature.description}
+          <div className="space-y-12">
+            {study.decisions.map((decision, i) => (
+              <div key={i}>
+                <h3 className="text-sm font-medium mb-1">{decision.title}</h3>
+                <p className="text-xs text-accent/80 mb-3">{decision.choice}</p>
+                <p className="text-sm text-muted leading-relaxed">
+                  {decision.reasoning}
                 </p>
+                {decision.media && (
+                  <CaptionedMedia media={decision.media} alt={decision.title} />
+                )}
               </div>
             ))}
           </div>
         </section>
 
-        {/* Additional Images */}
-        {study.images.length > 1 && (
-          <section className="mb-16 md:mb-20">
-            <div className="grid md:grid-cols-2 gap-4">
-              {study.images.slice(1).map((image, index) => (
-                <div
-                  key={index}
-                  className="relative aspect-video rounded-lg overflow-hidden border border-border bg-foreground/[0.02]"
-                >
-                  <Image
-                    src={image}
-                    alt={`${study.title} screenshot ${index + 2}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Technical */}
-        <section className="mb-16 md:mb-20">
-          <h2 className="text-xs text-muted uppercase tracking-widest mb-8">
-            Technical Highlights
+        {/* Deep Dive */}
+        <section className="mb-16">
+          <h2 className="text-xs text-muted/50 uppercase tracking-widest mb-4">
+            {study.deepDive.title}
           </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {study.technical.map((section, index) => (
-              <div key={index}>
-                <h3 className="text-xs text-muted/50 uppercase tracking-wider mb-3">
-                  {section.title}
-                </h3>
-                <ul className="space-y-2">
-                  {section.points.map((point, i) => (
-                    <li key={i} className="text-xs leading-relaxed flex gap-2">
-                      <span className="text-accent mt-0.5">-</span>
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          <div className="space-y-4">
+            {study.deepDive.content.map((paragraph, i) => (
+              <p key={i} className="text-sm leading-relaxed text-muted">
+                {paragraph}
+              </p>
             ))}
           </div>
+          {study.deepDive.media && (
+            <CaptionedMedia
+              media={study.deepDive.media}
+              alt={study.deepDive.title}
+            />
+          )}
         </section>
 
-        {/* Results */}
-        <section className="mb-16 md:mb-20">
-          <h2 className="text-xs text-muted uppercase tracking-widest mb-8">
-            Results
+        {/* Outcomes */}
+        <section className="mb-16">
+          <h2 className="text-xs text-muted/50 uppercase tracking-widest mb-6">
+            Outcomes
           </h2>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {study.results.map((result, index) => (
-              <div
-                key={index}
-                className="bg-foreground/[0.02] border border-border rounded-lg p-4"
-              >
-                <p className="text-xs leading-relaxed">{result}</p>
-              </div>
+          <ul className="space-y-3">
+            {study.outcomes.map((outcome, i) => (
+              <li key={i} className="text-sm leading-relaxed flex gap-3">
+                <span className="text-accent/60 shrink-0">—</span>
+                <span>{outcome}</span>
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
 
         {/* Links */}
         {study.links && study.links.length > 0 && (
-          <section className="pb-24 md:pb-32">
+          <section className="pb-20">
             <div className="flex gap-4">
               {study.links.map((link) => (
                 <a
@@ -220,7 +228,7 @@ export default async function CaseStudyPage({
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs border border-border px-4 py-2.5 rounded-full hover:border-foreground hover:bg-foreground/[0.02] transition-all duration-300 flex items-center gap-2"
+                  className="text-xs border border-border px-4 py-2.5 rounded-full hover:border-foreground transition-colors duration-300 flex items-center gap-2"
                 >
                   {link.label}
                   <svg
@@ -245,25 +253,12 @@ export default async function CaseStudyPage({
 
       {/* Footer */}
       <footer className="border-t border-border">
-        <div className="max-w-4xl mx-auto px-6 py-12">
+        <div className="max-w-3xl mx-auto px-6 py-10">
           <div className="flex items-center justify-between">
             <Link
               href="/#work"
-              className="text-xs text-muted hover:text-foreground transition-colors duration-300 flex items-center gap-2"
+              className="text-xs text-muted hover:text-foreground transition-colors duration-300"
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-                />
-              </svg>
               All Projects
             </Link>
             <span className="text-xs text-muted/50">
