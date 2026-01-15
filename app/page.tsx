@@ -373,7 +373,7 @@ export default function Home() {
       <main className="max-w-4xl mx-auto px-6">
         {/* Hero */}
         <section className="pt-32 pb-24 md:pt-44 md:pb-32">
-          <div className="animate-fade-up flex items-center gap-4 mb-6" style={{ animationDelay: "0ms" }}>
+          <div className="animate-fade-up flex items-center gap-8 mb-6" style={{ animationDelay: "0ms" }}>
             <Image
               src="/headshot.jpg"
               alt="Daniel Hilse"
@@ -382,34 +382,34 @@ export default function Home() {
               className="rounded-full object-cover"
             />
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
-              <span className="uppercase tracking-widest">Full-stack Developer</span>
-              <span className="text-border hidden sm:inline">|</span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                Available starting {new Date(new Date().getFullYear(), new Date().getMonth() + 1).toLocaleString('en-US', { month: 'long' })}
-              </span>
-              <span className="text-border hidden sm:inline">|</span>
+              {/* <span className="uppercase tracking-widest">Full-stack Developer</span> */}
+              {/* <span className="text-border hidden sm:inline">·</span> */}
+
+              
               <span>{status.location} · {status.timezone}</span>
+              <span className="flex items-center gap-2.5">
+              <span className="text-border hidden sm:inline">|</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                Available {new Date(new Date().getFullYear(), new Date().getMonth() + 1).toLocaleString('en-US', { month: 'long', year: 'numeric' })}
+              </span>
             </div>
           </div>
           <h1
             className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.15] mb-8 animate-fade-up"
             style={{ animationDelay: "100ms" }}
           >
-            Building software that's
+            Full-stack developer building
             <br />
             <span className="bg-gradient-to-r from-accent to-accent/60 bg-clip-text text-transparent">
-              practical, calm,
+              calm, useful
             </span>{" "}
-            
-            <br />
-            and solves real problems.
+            software.
           </h1>
           <p
-            className="text-sm text-muted max-w-lg leading-relaxed animate-fade-up"
+            className="text-sm text-muted max-w-xl leading-relaxed animate-fade-up"
             style={{ animationDelay: "200ms" }}
           >
-            I'm a senior generalist with strong product judgment working across frontend, backend, and data to ship reliable systems with clean interfaces.
+            Web apps and systems designed to be fast, clear, and predictable in everyday use. ~10 years shipping product work using React and Python.
           </p>
           <div
             className="flex gap-4 mt-8 animate-fade-up"
@@ -549,7 +549,7 @@ export default function Home() {
               </div>
               <div>
                 <h3 className="text-xs text-muted/50 uppercase tracking-widest mb-4">
-                  Data & Tools
+                  Data & Infrastructure
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {[...skills.data, ...skills.tools].map((skill) => (

@@ -4,54 +4,51 @@ export const listenToo: CaseStudy = {
   slug: "listen-too",
   title: "Listen Too",
   tagline:
-    "A playlist generator that turns 'what are you listening to?' into a shareable link in under 10 seconds.",
+    "One-click playlist generator that turns recent Spotify activity into a shareable playlist.",
   role: "Full-Stack Developer",
   timeline: "2024",
   stack: ["Next.js", "TypeScript", "Spotify Web API"],
   problem: {
     context:
-      "Friends kept asking what I was listening to. My answer was always 'uh, a lot of stuff'—then I'd spend five minutes scrolling through Spotify trying to remember standout tracks. Even when I did share, sending individual songs felt disconnected from my actual listening patterns.",
+      "Sharing current listening habits in Spotify requires manual playlist curation. Existing features (Top Tracks, Liked Songs) either aren't shareable or bury recent activity in long histories.",
     breakdown: [
-      "Spotify's 'Top Tracks' feature exists but isn't shareable—it's buried in wrapped and profile stats",
-      "Liked songs accumulate over years; the recent stuff drowns in 2,000+ tracks",
-      "Creating a playlist manually meant 15+ minutes of curation every time someone asked",
+      "Spotify's Liked Tracks API has no date filter—returns all tracks regardless of time period",
+      "Playlist creation is eventually consistent; API returns success before data propagates",
+      "Track additions capped at 100 per request, requiring chunked uploads",
     ],
   },
   decisions: [
     {
-      title: "Merge sources instead of picking one",
-      choice: "Interweaved top tracks with recently liked songs",
+      title: "Two-source interweaving",
+      choice: "Combine top tracks + liked songs with deduplication",
       reasoning:
-        "Spotify's top tracks endpoint reflects algorithmic weighting—what you played most. Liked songs reflect explicit intent—what you chose to save. Neither alone captures 'what I'm into.' Built an interweaving function that alternates between sources, deduplicates overlaps, and falls back gracefully when one runs dry. The tradeoff: playlist order isn't strictly ranked, but it better represents actual listening behavior.",
+        "Top tracks reflect algorithmic weighting; liked songs reflect explicit saves. Interweaving both with 2x overfetch (to account for deduplication) produces a more representative snapshot than either source alone.",
     },
     {
-      title: "Encrypt tokens at rest",
-      choice: "AES-GCM encryption in HTTP-only cookies",
+      title: "Encrypted cookie sessions",
+      choice: "AES-GCM encryption with httpOnly cookies",
       reasoning:
-        "Considered storing tokens in localStorage (simpler) or server-side sessions (more infra). HTTP-only cookies with encryption won because they're inaccessible to XSS, persist across browser sessions, and require no database. The 32-byte key and 12-byte IV add complexity, but tokens containing Spotify account access warrant the extra care.",
+        "No database required, resistant to XSS, and persists across browser sessions using native Web Crypto APIs.",
     },
     {
-      title: "Filter liked songs by date client-side",
-      choice: "Calculate cutoff date and iterate until timestamp exceeds it",
+      title: "Deterministic handling of eventual consistency",
+      choice: "2-second wait before redirect to success page",
       reasoning:
-        "Spotify's /me/tracks endpoint returns all liked songs with no time filter parameter. For 'last 4 weeks,' I had to fetch pages of liked songs and check added_at against a calculated cutoff. It's inefficient—sometimes fetching 100+ tracks to find 15—but Spotify's API offers no alternative. I fetch 2x the target count from each source to account for deduplication losses.",
+        "Spotify's API returns 201 before playlist syncs to read replicas. Polling adds 3-4 API calls and still races. Fixed delay handles 99% of cases with zero added complexity.",
     },
   ],
   deepDive: {
-    title: "The propagation delay problem",
+    title: "Client-side date filtering",
     content: [
-      "After creating the playlist and adding tracks, I redirected users to a success page with a Spotify embed preview. The embed consistently showed an empty playlist.",
-      "First assumption: my code was wrong. Logged every response—playlist created successfully, tracks added with 201 status, all URIs valid. The API was lying.",
-      "Debugging revealed Spotify's API returns success before the playlist propagates through their system. The tracks exist in their database but aren't queryable yet. The embed iframe hits a different read replica that hasn't synced.",
-      "Solution: a 2-second delay before redirect. Crude, but reliable. Considered polling the playlist endpoint until track count matched, but that adds 3-4 additional API calls and still occasionally races. The fixed delay handles 99% of cases with zero added complexity.",
-      "The lesson: APIs that return success aren't always telling the truth. Eventual consistency is someone else's problem until it's your UX.",
+      "Spotify's /me/tracks endpoint returns all liked songs with no time filter parameter. For 'last 4 weeks,' the app fetches pages of liked songs chronologically and compares added_at against a calculated cutoff date.",
+      "Requires fetching additional pages to find recent tracks, since the API provides no date filtering. The 2x overfetch from each source ensures enough tracks survive deduplication to hit the target count.",
     ],
   },
   outcomes: [
-    "Playlist creation takes under 10 seconds from button click to shareable link",
-    "Auto-copies to clipboard on success—sharing requires zero additional taps",
-    "Eliminates the 'let me think about what I've been listening to' pause entirely",
-    "Went from dodging the question to actually sharing playlists with friends",
+    "Under 10 seconds from button click to shareable playlist",
+    "Handles Spotify OAuth with automatic token refresh before expiration",
+    "Deterministic playlist creation despite eventual consistency",
+    "Auto-copies playlist URL to clipboard for frictionless sharing",
   ],
   heroMedia: {
     type: "video",

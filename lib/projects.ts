@@ -21,7 +21,7 @@ export const projects: Project[] = [
     title: "Archipelago",
     year: "2025",
     blurb:
-      "Cross-sectional market analysis tool that replaced my spreadsheet-driven momentum research. Four interactive visualization types for comparing 500+ stocks across multiple metrics simultaneously—built because rank tables destroy the structure I needed to see.",
+      "Cross-sectional market analysis tool with interactive charts for comparing 500+ stocks across multiple momentum metrics. Built to replace spreadsheet-driven research where rank tables obscure distribution and clustering.",
     tech: ["Python", "Next.js", "PostgreSQL"],
     image: "/test.mp4",
     alt: "Financial analytics platform",
@@ -35,7 +35,7 @@ export const projects: Project[] = [
     title: "Boulevard Quartz",
     year: "2025",
     blurb:
-      "Commercial real estate aggregator that scrapes regional Missouri brokers without APIs. Replaced a client's daily routine of checking 5+ websites with unified search across 5,000+ listings—running for under $30/month.",
+      "Commercial real estate aggregator that scrapes regional broker sites and unifies search across 5,000+ listings. Replaced a client's daily 5-site workflow while running under $30/month.",
     tech: ["Python", "Next.js", "PostgreSQL"],
     image: "/projects/project-2.png",
     alt: "Commercial real estate platform",
@@ -49,7 +49,7 @@ export const projects: Project[] = [
     title: "Nonprofit ROI Calculator",
     year: "2025",
     blurb:
-      "Embeddable ROI calculator for nonprofit paid media campaigns, built to work on Webflow sites I don't control. Real-time projections with sub-20ms slider interactions and branded PDF exports for lead capture.",
+      "Embeddable ROI calculator for nonprofit campaigns with real-time projections and branded PDF exports. Designed for embedding on third-party Webflow sites.",
     tech: ["Next.js", "TypeScript", "React"],
     image: "/projects/project-3.png",
     alt: "Nonprofit ROI calculator",
@@ -63,7 +63,7 @@ export const projects: Project[] = [
     title: "Customer Reference Agent",
     year: "2025",
     blurb:
-      "AI-powered search tool that surfaces customer quotes from Salesforce for Act-On's sales team. Replaced the mid-pitch 'can you find me a quote?' call with 3-second semantic search, confidence scoring, and multi-provider failover.",
+      "Internal AI search tool that pulls customer quotes from Salesforce with semantic search and confidence scoring. Replaced the mid-pitch \"can you find me a quote?\" call.",
     tech: ["Claude", "Next.js", "Vercel AI SDK"],
     image: "/projects/project-4.png",
     alt: "AI-powered reference agent interface",
@@ -77,7 +77,7 @@ export const projects: Project[] = [
     title: "Blog Content Audit",
     year: "2024",
     blurb:
-      "AI-powered content audit that classified 500+ archived blog posts against Act-On's strategic use case framework. Replaced 5+ weeks of manual review with 3 hours of batch processing—and revealed a 62% acquisition skew that was invisible in the spreadsheet.",
+      "AI-assisted content audit that classified 500+ posts into strategic use cases and surfaced a 62% acquisition skew that was invisible in the spreadsheet.",
     tech: ["Python", "Claude", "Next.js"],
     image: "/projects/project-5.png",
     alt: "Blog content analysis dashboard",
@@ -91,7 +91,7 @@ export const projects: Project[] = [
     title: "pATCHES",
     year: "ongoing",
     blurb:
-      "Music education platform and JavaScript plugin ecosystem reaching 2M+ visitors, combining educational content with professional audio software, generating over $200k in plugin sales since 2016.",
+      "Music education platform and JavaScript plugin ecosystem reaching 2M+ visitors with $200k+ in plugin sales since 2016.",
     tech: ["JavaScript", "AWS", "Web Analytics"],
     image: "/projects/project-6.png",
     alt: "pATCHES music education platform",
@@ -102,7 +102,7 @@ export const projects: Project[] = [
     title: "Listen Too",
     year: "2024",
     blurb:
-      "Playlist generator that turns 'what are you listening to?' into a shareable link in under 10 seconds. Merges Spotify's top tracks with recently liked songs to capture what you're actually into right now.",
+      "Generates a shareable playlist from recent Spotify activity in seconds.",
     tech: ["Next.js", "TypeScript", "OAuth"],
     image: "/projects/project-7.png",
     alt: "Spotify playlist generator",

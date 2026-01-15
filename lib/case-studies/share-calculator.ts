@@ -4,25 +4,26 @@ export const shareCalculator: CaseStudy = {
   slug: "share-calculator",
   title: "Share Fundraising Calculator",
   tagline:
-    "An embeddable ROI calculator for nonprofit paid media campaigns, built to work on sites I don't control.",
+    "An embeddable ROI calculator for nonprofit paid media campaigns with branded PDF reports.",
   role: "Full-Stack Developer",
   timeline: "2025",
   stack: ["Next.js", "TypeScript", "Puppeteer", "Vercel Blob"],
   problem: {
     context:
-      "A nonprofit marketing agency needed a calculator that clients could embed on their Webflow sites. The brief seemed simple—sliders, real-time results, downloadable reports. The complexity hid in 'embeddable on sites I don't control.'",
+      "A nonprofit marketing agency needed a lead generation tool that clients could embed on their Webflow sites. The calculator estimates ROI for paid advertising across two funnel strategies and generates downloadable reports for lead capture.",
     breakdown: [
-      "Third-party embedding means unknown CORS origins and no control over parent page CSS",
-      "Lead capture requires file generation (PDF/CSV) with email delivery—cold starts on serverless",
-      "Real-time feedback demands sub-100ms interactions, not server roundtrips for every slider move",
+      "Must work embedded on third-party Webflow sites with unknown origins",
+      "PDF reports need to match the branded web design exactly—custom fonts, layout, colors",
+      "Slider interactions need to feel instant despite recalculating ROI across four time horizons",
     ],
   },
   decisions: [
     {
-      title: "Client-side calculation engine",
-      choice: "Single useMemo with 11 dependencies instead of API calls",
+      title: "Client-side calculations",
+      choice:
+        "useMemo-based calculation engine instead of API calls for slider updates",
       reasoning:
-        "Considered a /calculate endpoint but latency killed the exploration UX. Moved all math client-side—totals, projections, ROI across four time horizons. The tradeoff: a fragile dependency array (add a slider, forget a dep, get stale results). But 16ms re-renders vs. 200ms roundtrips made the maintenance cost worth it.",
+        "11 interdependent variables recalculated on every slider move. Server roundtrips would add 200ms+ latency per interaction. All math runs client-side; API only handles file generation.",
       media: {
         type: "video",
         src: "https://d1lbnboj0lfh6w.cloudfront.net/portfolio/calculator/calculator-2.mp4",
@@ -30,32 +31,24 @@ export const shareCalculator: CaseStudy = {
       },
     },
     {
-      title: "Dual embedding strategy",
-      choice: "Both standalone widget and iframe embed, user picks",
-      reasoning:
-        "Started with a UMD widget bundle (webpack, optional Shadow DOM for CSS isolation). Worked on clean pages, broke on Webflow sites with aggressive global styles. Added an iframe-based embed with iframe-resizer for auto-height. iframe costs performance overhead but guarantees isolation. When CSS conflicts are unpredictable, isolation wins over elegance.",
-    },
-    {
-      title: "Absolute URLs over relative paths",
-      choice: "Hardcoded production API URLs in the client bundle",
-      reasoning:
-        "When your React app runs inside an iframe on webflow-client-xyz.com, relative URLs like /api/generate-files resolve to the wrong origin. Tried environment variables and proxy approaches—all broke in some embedding edge case. Absolute URLs are the only thing that works reliably across unknown host domains. Sometimes the pragmatic answer is the right one.",
-    },
-    {
-      title: "Server-side PDF with puppeteer-core",
+      title: "Puppeteer for PDF generation",
       choice: "Browser automation over lightweight PDF libraries",
       reasoning:
-        "Could have used jsPDF or pdfmake for faster cold starts. Chose puppeteer because the client wanted the PDF to match the branded web design exactly—custom fonts, layout, colors. Puppeteer renders actual HTML, so I could reuse styles. The cost: ~5s cold starts, 15+ Chrome flags tuned for serverless. Worth it for design parity.",
+        "Client required exact visual parity between web and PDF. Puppeteer renders actual HTML with embedded Base64 fonts (FuturaPT family), reusing the same styles. Trade-off: ~5s cold starts on serverless, but eliminates manual layout recreation.",
+    },
+    {
+      title: "IIFE widget bundle",
+      choice: "Self-contained esbuild bundle with absolute API URLs",
+      reasoning:
+        "Widget runs inside iframes on unknown Webflow domains. Relative URLs resolve to the wrong origin. Bundle is fully self-contained, uses absolute production URLs, and exposes a single global entry point. iframe-resizer handles dynamic height adjustment.",
     },
   ],
   deepDive: {
-    title: "The CORS education",
+    title: "Embedding on third-party sites",
     content: [
-      "Embedding on third-party sites exposed gaps in my understanding of browser security. The first version worked locally, failed silently in production embeds.",
-      "Problem 1: The widget's fetch calls to /api/generate-files were being blocked. Fix: CORS headers with Access-Control-Allow-Origin: '*'. I'd avoided wildcard origins before, but when the embedding domain is unknown, it's the only option.",
-      "Problem 2: Preflight OPTIONS requests weren't being handled. The API route only had POST logic. Fix: explicit OPTIONS handler returning 204 with the CORS headers.",
-      "Problem 3: Rate limiting was IP-based, but proxied requests all came from the same IP (Webflow's CDN). Fix: check x-forwarded-for, x-real-ip, and cf-connecting-ip headers in priority order.",
-      "The lesson wasn't technical—it was that 'embeddable' is a requirements category that sounds simple and isn't. Every assumption about same-origin behavior needs to be questioned.",
+      "Webflow embedding required CORS headers with wildcard origin (embedding domains are unknown at deploy time). Preflight OPTIONS requests required explicit handling in addition to POST routes.",
+      "Rate limiting by IP broke when all requests came through Webflow's CDN. Fixed by checking x-forwarded-for, x-real-ip, and cf-connecting-ip headers in priority order.",
+      "Lead data flows to Google Sheets (no database). If Sheets API fails, files still generate—graceful degradation keeps the lead capture working.",
     ],
     media: {
       type: "image",
@@ -64,10 +57,10 @@ export const shareCalculator: CaseStudy = {
     },
   },
   outcomes: [
-    "Calculator works on Webflow sites without same-origin constraints—tested on three client domains",
-    "Slider interactions stay under 20ms despite 11-variable calculation engine",
-    "File generation handles bursts via IP-aware rate limiting (3 req/min with retry-after headers)",
-    "Expired files auto-cleaned to prevent unbounded storage growth",
+    "Slider interactions under 20ms with 11-variable calculation engine",
+    "Works on any Webflow site—tested across three client domains",
+    "PDF/CSV generation with 3 req/min rate limiting and automatic 14-day cleanup",
+    "Lead data logged to Google Sheets with graceful fallback if API unavailable",
   ],
   heroMedia: {
     type: "video",

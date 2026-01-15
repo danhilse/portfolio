@@ -8,45 +8,45 @@ export interface Experience {
 export const experience: Experience[] = [
   {
     company: "Archipelago",
-    role: "Chief Technology Officer",
+    role: "Lead Engineer",
     period: "2024 — Present",
-    description: "Leading technical strategy and product development",
+    description: "Technical strategy and development for a real-time financial analytics platform",
   },
   {
     company: "Act-On",
     role: "Freelance Developer",
     period: "2024 — 2025",
-    description: "AI-powered sales tools and content automation",
+    description: "AI-powered sales enablement tools and automated content workflows",
   },
   {
     company: "Freelance",
     role: "Full-Stack Developer",
     period: "2023 — 2024",
-    description: "Web applications for startups and small businesses",
+    description: "Data-heavy web applications for startups and small businesses",
   },
   {
     company: "Veteran's United",
     role: "SEO / Python",
     period: "2022",
-    description: "Search optimization and Python tooling",
+    description: "Search optimization tooling and internal Python automation",
   },
   {
     company: "Marpipe",
     role: "Head of Product",
     period: "2021 — 2022",
-    description: "Product strategy for creative testing platform",
+    description: "Product strategy and roadmap for a creative testing SaaS platform",
   },
   {
     company: "Ableton, AG",
     role: "Learning Resources",
     period: "2018",
-    description: "Educational content for music production software",
+    description: "Educational content and documentation for music production software",
   },
   {
     company: "pATCHES",
     role: "Founder / Developer",
     period: "2016 — Present",
-    description: "Music education platform, 2M+ visitors, $200k+ revenue",
+    description: "Built and operate a music education platform reaching 2M+ visitors",
   },
   {
     company: "Trulaske College of Business",
@@ -64,11 +64,11 @@ export const skills = {
 };
 
 export const status = {
-  current: "CTO at Archipelago",
+  current: "Lead Engineer at Archipelago",
   location: "Boulder, CO",
   timezone: "MST (UTC-7)",
 };
 
-export const about = `I’m a full-stack developer with about a decade of experience building and operating production software. The work has mostly involved AI tools, data-heavy systems, and internal or customer-facing products where reliability matters as much as usability.
+export const about = `I've spent about a decade building product-focused software, often in roles where the problem is underspecified and the constraints are real—performance, cost, reliability, and user trust. My work spans frontend, backend, and data, with a focus on AI-assisted workflows and analytics-heavy products.
 
-I’ve founded and run products end-to-end, including pATCHES, a music education platform used by more than 2M people. Most of my day-to-day work is taking unclear problems, shipping something concrete, and improving it based on how people actually use it.`;
+I'm also a 3× founder. Building and operating pATCHES taught me the full lifecycle: unclear requirements, tradeoffs under pressure, and the unglamorous work of keeping systems stable once people depend on them.`;

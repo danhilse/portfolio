@@ -149,18 +149,49 @@ export default async function CaseStudyPage({
         {/* Problem */}
         <section className="mb-16">
           <h2 className="text-xs text-muted/50 uppercase tracking-widest mb-4">
-            The Problem
+            Problem
           </h2>
-          <p className="text-sm leading-relaxed mb-6">{study.problem.context}</p>
-          <ul className="space-y-3">
-            {study.problem.breakdown.map((point, i) => (
-              <li key={i} className="text-sm text-muted leading-relaxed flex gap-3">
-                <span className="text-accent/60 shrink-0">—</span>
-                <span>{point}</span>
-              </li>
-            ))}
-          </ul>
+          <p className="text-sm leading-relaxed mb-6">
+            {study.problem.summary || study.problem.context}
+          </p>
+          {study.problem.breakdown && (
+            <ul className="space-y-3">
+              {study.problem.breakdown.map((point, i) => (
+                <li key={i} className="text-sm text-muted leading-relaxed flex gap-3">
+                  <span className="text-accent/60 shrink-0">—</span>
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </section>
+
+        {/* Constraints (new format only) */}
+        {study.constraints && study.constraints.length > 0 && (
+          <section className="mb-16">
+            <h2 className="text-xs text-muted/50 uppercase tracking-widest mb-4">
+              Constraints
+            </h2>
+            <ul className="space-y-3">
+              {study.constraints.map((constraint, i) => (
+                <li key={i} className="text-sm text-muted leading-relaxed flex gap-3">
+                  <span className="text-accent/60 shrink-0">—</span>
+                  <span>{constraint}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* Solution (new format only) */}
+        {study.solution && (
+          <section className="mb-16">
+            <h2 className="text-xs text-muted/50 uppercase tracking-widest mb-4">
+              What I Built
+            </h2>
+            <p className="text-sm leading-relaxed">{study.solution}</p>
+          </section>
+        )}
 
         {/* Key Decisions */}
         <section className="mb-16">
@@ -171,7 +202,9 @@ export default async function CaseStudyPage({
             {study.decisions.map((decision, i) => (
               <div key={i}>
                 <h3 className="text-sm font-medium mb-1">{decision.title}</h3>
-                <p className="text-xs text-accent/80 mb-3">{decision.choice}</p>
+                {decision.choice && (
+                  <p className="text-xs text-accent/80 mb-3">{decision.choice}</p>
+                )}
                 <p className="text-sm text-muted leading-relaxed">
                   {decision.reasoning}
                 </p>
@@ -188,13 +221,19 @@ export default async function CaseStudyPage({
           <h2 className="text-xs text-muted/50 uppercase tracking-widest mb-4">
             {study.deepDive.title}
           </h2>
-          <div className="space-y-4">
-            {study.deepDive.content.map((paragraph, i) => (
-              <p key={i} className="text-sm leading-relaxed text-muted">
-                {paragraph}
-              </p>
-            ))}
-          </div>
+          {Array.isArray(study.deepDive.content) ? (
+            <div className="space-y-4">
+              {study.deepDive.content.map((paragraph, i) => (
+                <p key={i} className="text-sm leading-relaxed text-muted">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm leading-relaxed text-muted">
+              {study.deepDive.content}
+            </p>
+          )}
           {study.deepDive.media && (
             <CaptionedMedia
               media={study.deepDive.media}

@@ -10,18 +10,26 @@ export interface CaseStudy {
   timeline: string;
   stack: string[];
   problem: {
-    context: string;
-    breakdown: string[];
+    // New format
+    summary?: string;
+    // Old format (deprecated)
+    context?: string;
+    breakdown?: string[];
   };
+  // New format fields
+  constraints?: string[];
+  solution?: string;
   decisions: {
     title: string;
-    choice: string;
+    // Old format (deprecated)
+    choice?: string;
     reasoning: string;
     media?: MediaItem;
   }[];
   deepDive: {
     title: string;
-    content: string[];
+    // Supports both string (new) and string[] (old)
+    content: string | string[];
     media?: MediaItem;
   };
   outcomes: string[];
