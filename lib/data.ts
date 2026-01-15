@@ -69,6 +69,6 @@ export const status = {
   timezone: "MST (UTC-7)",
 };
 
-export const about = `I've spent about a decade building product-focused software, often in roles where the problem is underspecified and the constraints are real—performance, cost, reliability, and user trust. My work spans frontend, backend, and data, with a focus on AI-assisted workflows and analytics-heavy products.
+export const about = `I've spent about a decade building product-focused software, often in roles where the problem is underspecified and the constraints are real. Performance, cost, reliability, and user trust are top of mind when optimizing for user experience. My work spans frontend, backend, and data, with a focus on AI-assisted workflows and analytics-heavy products.
 
-I'm also a 3× founder. Building and operating pATCHES taught me the full lifecycle: unclear requirements, tradeoffs under pressure, and the unglamorous work of keeping systems stable once people depend on them.`;
+I'm also a 3× founder. Building and operating pATCHES taught me the full lifecycle. It's a mix of unclear requirements, tradeoffs under pressure, and the unglamorous work of keeping systems stable once people depend on them.`;
