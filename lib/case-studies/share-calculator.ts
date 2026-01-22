@@ -67,6 +67,13 @@ export const shareCalculator: CaseStudy = {
     src: "https://d1lbnboj0lfh6w.cloudfront.net/portfolio/calculator/calculator-1.mp4",
     caption: "Share Fundraising Calculator",
   },
+  testimonial: {
+    quote:
+      "If you need someone to solve a problem at the intersection of technology and design, then Dan is your guy. I have complete confidence that he will knock it out of the park whenever I send a project his way.",
+    author: "Trevan Strean",
+    role: "Designer",
+    company: "Share",
+  },
   links: [
     { label: "Live Demo", href: "https://share-calculator-delta.vercel.app" },
   ],

@@ -2,6 +2,13 @@ export type MediaItem =
   | { type: "image"; src: string; caption: string }
   | { type: "video"; src: string; caption: string };
 
+export interface Testimonial {
+  quote: string;
+  author: string;
+  role: string;
+  company: string;
+}
+
 export interface CaseStudy {
   slug: string;
   title: string;
@@ -34,6 +41,7 @@ export interface CaseStudy {
   };
   outcomes: string[];
   heroMedia: MediaItem;
+  testimonial?: Testimonial;
   links?: {
     label: string;
     href: string;
