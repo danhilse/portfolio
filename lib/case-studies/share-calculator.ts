@@ -71,7 +71,7 @@ export const shareCalculator: CaseStudy = {
     quote:
       "If you need someone to solve a problem at the intersection of technology and design, then Dan is your guy. I have complete confidence that he will knock it out of the park whenever I send a project his way.",
     author: "Trevan Strean",
-    role: "Designer",
+    role: "Creative Director",
     company: "Share",
   },
   links: [

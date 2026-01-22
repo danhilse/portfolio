@@ -398,10 +398,9 @@ export default function Home() {
             className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.15] mb-8 animate-fade-up"
             style={{ animationDelay: "100ms" }}
           >
-            Full-stack developer building
-            <br />
+            Full-stack developer building{" "}
             <span className="bg-gradient-to-r from-accent to-accent/60 bg-clip-text text-transparent">
-              calm, useful
+              calm, modern
             </span>{" "}
             software.
           </h1>

@@ -5,7 +5,24 @@ import { useEffect, useCallback, use } from "react";
 import Image from "next/image";
 import { caseStudies } from "@/lib/case-studies/index";
 
-import type { MediaItem } from "@/lib/case-studies/types";
+import type { MediaItem, Testimonial } from "@/lib/case-studies/types";
+
+function TestimonialBlock({ testimonial }: { testimonial: Testimonial }) {
+  return (
+    <blockquote className="border-l-2 border-accent/40 pl-6 py-1">
+      <p className="text-sm leading-relaxed italic text-foreground/90">
+        &ldquo;{testimonial.quote}&rdquo;
+      </p>
+      <footer className="mt-4 text-xs text-muted">
+        <span className="text-foreground/80">{testimonial.author}</span>
+        <span className="mx-2">/</span>
+        <span>
+          {testimonial.role}, {testimonial.company}
+        </span>
+      </footer>
+    </blockquote>
+  );
+}
 
 function CaptionedMedia({
   media,
@@ -265,6 +282,16 @@ export default function CaseStudyModal({
               ))}
             </ul>
           </section>
+
+          {/* Testimonial */}
+          {study.testimonial && (
+            <section className="mb-12">
+              <h2 className="text-xs text-muted/50 uppercase tracking-widest mb-6">
+                Testimonial
+              </h2>
+              <TestimonialBlock testimonial={study.testimonial} />
+            </section>
+          )}
 
           {/* Links */}
           {study.links && study.links.length > 0 && (
