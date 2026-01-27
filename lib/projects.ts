@@ -49,7 +49,7 @@ export const projects: Project[] = [
     title: "Nonprofit ROI Calculator",
     year: "2025",
     blurb:
-      "Embeddable ROI calculator for nonprofit campaigns with real-time projections and branded PDF exports. Designed for embedding on third-party Webflow sites.",
+      "Embeddable ROI calculator for nonprofit campaigns with real-time projections and branded PDF exports. Ships as a drop-in component for Webflow and similar platforms.",
     tech: ["Next.js", "TypeScript", "React"],
     image: "/projects/project-3.png",
     alt: "Nonprofit ROI calculator",
@@ -77,7 +77,7 @@ export const projects: Project[] = [
     title: "Blog Content Audit",
     year: "2024",
     blurb:
-      "AI-assisted content audit that classified 500+ posts into strategic use cases and surfaced a 62% acquisition skew that was invisible in the spreadsheet.",
+      "AI-assisted content audit that classified 500+ posts into strategic use cases and surfaced that 62% of content targeted acquisition over retention—a gap invisible in the spreadsheet.",
     tech: ["Python", "Claude", "Next.js"],
     image: "/projects/project-5.png",
     alt: "Blog content analysis dashboard",

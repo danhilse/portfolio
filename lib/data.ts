@@ -32,9 +32,9 @@ export const experience: Experience[] = [
   },
   {
     company: "Marpipe",
-    role: "Head of Product",
-    period: "2021 — 2022",
-    description: "Product strategy and roadmap for a creative testing SaaS platform",
+    role: "Founding Engineer",
+    period: "2019 — 2020",
+    description: "Built multivariate ad testing platform from prototype through enterprise clients",
   },
   {
     company: "Ableton, AG",
@@ -69,6 +69,6 @@ export const status = {
   timezone: "MST (UTC-7)",
 };
 
-export const about = `I've spent about a decade building product-focused software, often in roles where the problem is underspecified and the constraints are real. Performance, cost, reliability, and user trust are top of mind when optimizing for user experience. My work spans frontend, backend, and data, with a focus on AI-assisted workflows and analytics-heavy products.
+export const about = `I've spent about a decade building product-focused software, often in roles where the problem is underspecified and the constraints are real. My work spans frontend, backend, and data, with a focus on AI-assisted workflows and analytics-heavy products.
 
-I'm also a 3× founder. Building and operating pATCHES taught me the full lifecycle. It's a mix of unclear requirements, tradeoffs under pressure, and the unglamorous work of keeping systems stable once people depend on them.`;
+I'm also a 3× founder. Building and operating pATCHES taught me the full lifecycle—unclear requirements, tradeoffs under pressure, and the unglamorous work of keeping systems stable once people depend on them.`;

@@ -398,17 +398,17 @@ export default function Home() {
             className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.15] mb-8 animate-fade-up"
             style={{ animationDelay: "100ms" }}
           >
-            Full-stack developer building{" "}
+            Full-stack developer. I build software that's{" "}
             <span className="bg-gradient-to-r from-accent to-accent/60 bg-clip-text text-transparent">
-              calm, modern
+              fast, predictable,
             </span>{" "}
-            software.
+            and stays out of the way.
           </h1>
           <p
             className="text-sm text-muted max-w-xl leading-relaxed animate-fade-up"
             style={{ animationDelay: "200ms" }}
           >
-            Web apps and systems designed to be fast, clear, and predictable in everyday use. ~10 years shipping product work using React and Python.
+            Web apps and data systems for startups and small teams. ~10 years shipping product work with React and Python.
           </p>
           <div
             className="flex gap-4 mt-8 animate-fade-up"
