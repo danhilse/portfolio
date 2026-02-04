@@ -10,31 +10,31 @@ export const experience: Experience[] = [
     company: "Archipelago",
     role: "Lead Engineer",
     period: "2024 — Present",
-    description: "Technical strategy and development for a real-time financial analytics platform",
+    description: "Technical strategy and development for a real-time financial analytics platform with cross-sectional market visualization",
   },
   {
     company: "Act-On",
     role: "Freelance Developer",
     period: "2024 — 2025",
-    description: "AI-powered sales enablement tools and automated content workflows",
+    description: "AI-powered sales enablement tools and content workflow automation for B2B marketing platform",
   },
   {
     company: "Freelance",
     role: "Full-Stack Developer",
     period: "2023 — 2024",
-    description: "Data-heavy web applications for startups and small businesses",
+    description: "Data-intensive web applications for startups and small businesses, focusing on real estate and nonprofit sectors",
   },
   {
     company: "Veteran's United",
     role: "SEO / Python",
     period: "2022",
-    description: "Search optimization tooling and internal Python automation",
+    description: "Built search optimization tooling and Python automation for internal content operations",
   },
   {
     company: "Marpipe",
     role: "Founding Engineer",
     period: "2019 — 2020",
-    description: "Built multivariate ad testing platform from prototype through enterprise clients",
+    description: "Developed multivariate ad testing platform from early prototype through enterprise client acquisition",
   },
   {
     company: "Ableton, AG",
@@ -46,7 +46,7 @@ export const experience: Experience[] = [
     company: "pATCHES",
     role: "Founder / Developer",
     period: "2016 — Present",
-    description: "Built and operate a music education platform reaching 2M+ visitors",
+    description: "Built and operate music education platform with JavaScript plugin ecosystem, reaching 2M+ visitors and $200k+ in sales",
   },
   {
     company: "Trulaske College of Business",
@@ -69,6 +69,6 @@ export const status = {
   timezone: "MST (UTC-7)",
 };
 
-export const about = `I've spent about a decade building product-focused software, often in roles where the problem is underspecified and the constraints are real. My work spans frontend, backend, and data, with a focus on AI-assisted workflows and analytics-heavy products.
+export const about = `I've spent a decade building product-focused software in early-stage environments where requirements emerge through iteration and constraints are real. My work spans frontend, backend, and data infrastructure, with recent focus on AI-assisted workflows and analytics platforms.
 
-I'm also a 3× founder. Building and operating pATCHES taught me the full lifecycle—unclear requirements, tradeoffs under pressure, and the unglamorous work of keeping systems stable once people depend on them.`;
+I'm also a 3× founder. Building and operating pATCHES taught me the full product lifecycle—from early user testing through scaling to 2M+ visitors, balancing new features against operational stability.`;

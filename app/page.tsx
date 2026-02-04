@@ -402,13 +402,13 @@ export default function Home() {
             <span className="bg-gradient-to-r from-accent to-accent/60 bg-clip-text text-transparent">
               fast, predictable,
             </span>{" "}
-            and stays out of the way.
+            and built to last.
           </h1>
           <p
             className="text-sm text-muted max-w-xl leading-relaxed animate-fade-up"
             style={{ animationDelay: "200ms" }}
           >
-            Web apps and data systems for startups and small teams. ~10 years shipping product work with React and Python.
+            Web apps and data systems for startups and small teams. 10 years building production software with React and Python.
           </p>
           <div
             className="flex gap-4 mt-8 animate-fade-up"
